@@ -34,11 +34,10 @@ export default function RootLayout({
             gtag('config', 'G-YQCE7RTNKY');
           `}
         </Script>
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4556999763350192"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
         <script
           type="application/ld+json"
