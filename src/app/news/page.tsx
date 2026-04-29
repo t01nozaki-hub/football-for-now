@@ -78,12 +78,8 @@ export default function NewsPage() {
             {NEWS_ARTICLES.map((article) => (
               <Link key={article.id} href={`/news/${article.slug}`} className="block">
                 <div className="glass rounded-3xl p-6 md:p-8 border border-white/5 hover:border-white/20 transition-all group cursor-pointer">
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="w-full md:w-48 h-48 md:h-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-5xl flex-shrink-0 group-hover:scale-105 transition-transform">
-                      {article.image}
-                    </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-4">
+                      <div className="flex items-center gap-3 mb-3">
                         <span className="px-2 py-0.5 bg-neon-lime text-black text-[9px] font-black uppercase tracking-widest rounded">
                           {article.category}
                         </span>
@@ -92,14 +88,13 @@ export default function NewsPage() {
                           {article.time}
                         </div>
                       </div>
-                      <h2 className="text-xl md:text-2xl font-black italic tracking-tight mb-4 group-hover:text-neon-lime transition-colors">
+                      <h2 className="text-xl md:text-3xl font-black italic tracking-tight mb-4 group-hover:text-neon-lime transition-colors leading-tight">
                         {article.title}
                       </h2>
-                      <p className="text-sm text-white/60 leading-relaxed font-medium line-clamp-2">
+                      <p className="text-sm md:text-base text-white/60 leading-relaxed font-medium line-clamp-3">
                         {article.summary}
                       </p>
                     </div>
-                  </div>
                 </div>
               </Link>
             ))}
