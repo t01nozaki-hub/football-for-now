@@ -3,53 +3,7 @@ import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Newspaper, Clock, TrendingUp, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-const NEWS_ARTICLES = [
-  {
-    id: 1,
-    slug: 'arsenal-cl-semi-atletico',
-    title: 'アーセナル、悲願のCL制覇へ。準決勝アトレティコ戦に向け冨安健洋「準備はできている」',
-    category: 'チャンピオンズリーグ',
-    time: '45分前',
-    image: '🔴',
-    summary: '準々決勝でスポルティングを下したアーセナル。アトレティコ・マドリードとの準決勝を前に、冨安が守備の要として期待されています。'
-  },
-  {
-    id: 2,
-    slug: 'bayern-bundesliga-champions-2026',
-    title: 'バイエルン・ミュンヘン、2025/26ブンデスリーガ優勝を確定。伊藤洋輝が主力としてタイトル獲得',
-    category: 'ブンデスリーガ',
-    time: '3時間前',
-    image: '🏆',
-    summary: 'シーズン終盤を待たずして王座を奪還。伊藤洋輝は安定した守備とビルドアップで、加入1年目にして優勝の立役者となりました。'
-  },
-  {
-    id: 3,
-    slug: 'bernardo-silva-city-exit-rumor',
-    title: 'ベルナルド・シウバ、今季限りでマンチェスター・シティ退団か。欧州複数クラブが争奪戦へ',
-    category: 'プレミアリーグ',
-    time: '6時間前',
-    image: '🩵',
-    summary: '長年シティの中盤を支えた名手が新天地を求める模様。プレミアリーグの優勝争いの中、去就に注目が集まっています。'
-  },
-  {
-    id: 4,
-    slug: 'united-manchester-win-brentford',
-    title: 'マンチェスター・U、ブレントフォードに競り勝ちCL出場権争いに踏みとどまる',
-    category: 'プレミアリーグ',
-    time: '9時間前',
-    image: '👹',
-    summary: '2-1の逆転勝利。苦戦が続く今季のユナイテッドだが、トップ4入りの可能性を繋ぐ貴重な勝ち点3を獲得。'
-  },
-  {
-    id: 5,
-    slug: 'barcelona-la-liga-lead',
-    title: 'ラ・リーガ：バルセロナが首位を堅持。レアル・マドリードとの勝ち点差を維持し逃げ切り狙う',
-    category: 'ラ・リーガ',
-    time: '15時間前',
-    image: '🇪🇸',
-    summary: 'リーグ最終盤に向けて一歩も譲らないデッドヒート。バルサの若手陣が躍動し、タイトル獲得への期待が高まる。'
-  }
-];
+import { NEWS_ARTICLES } from '@/lib/news-data';
 
 export default function NewsPage() {
   return (
@@ -109,8 +63,8 @@ export default function NewsPage() {
               </h3>
               <div className="space-y-6">
                 {[
-                  'B・シウバ シティ退団へ',
-                  'CL アーセナル準決勝展望',
+                  'エムバペ レアルで初ゴール',
+                  'CL 準々決勝の組み合わせ決定',
                   'バイエルン ブンデス優勝',
                   'ラ・リーガ 優勝争いの行方',
                 ].map((topic, i) => (

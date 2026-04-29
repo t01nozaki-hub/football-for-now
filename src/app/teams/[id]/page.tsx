@@ -11,8 +11,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function TeamDetailPage({ params }: { params: { id: string } }) {
-  const teamId = params.id;
+export default async function TeamDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: teamId } = await params;
   
   let team: any = null;
   let matches: any = null;

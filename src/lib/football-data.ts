@@ -6,13 +6,13 @@ import { getWithBuildCache } from './build-cache';
 // Rate limit helper for Free Tier (10 requests/minute)
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-async function fetchWithRetry(url: string, options: any, retries = 5) {
+async function fetchWithRetry(url: string, options: any, retries = 10) {
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, options);
       if (res.status === 429) {
-        console.warn(`Rate limit (429) hit for ${url}. Waiting 15s...`);
-        await sleep(15000);
+        console.warn(`Rate limit (429) hit for ${url}. Waiting 30s...`);
+        await sleep(30000);
         continue;
       }
       if (!res.ok) {
@@ -20,7 +20,7 @@ async function fetchWithRetry(url: string, options: any, retries = 5) {
         await sleep(5000);
         continue;
       }
-      await sleep(7000); // 7s between requests
+      await sleep(10000); // 10s between requests
       return res.json();
     } catch (e) {
       console.error(`Fetch exception for ${url}:`, e);
