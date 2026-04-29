@@ -25,12 +25,12 @@ export default async function MatchesPage() {
     .flatMap(ld => ld.matches.map((m: any) => ({ ...m, leagueName: ld.name })))
     .sort((a: any, b: any) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime());
 
-  // Group matches by date
-  const groupedMatches: Record<string, any[]> = {};
+  // Group matches by league
+  const groupedByLeague: Record<string, any[]> = {};
   allMatches.forEach(match => {
-    const date = new Date(match.utcDate).toLocaleDateString('ja-JP', { month: 'short', day: 'numeric', weekday: 'short' });
-    if (!groupedMatches[date]) groupedMatches[date] = [];
-    groupedMatches[date].push(match);
+    const league = match.leagueName || 'Other';
+    if (!groupedByLeague[league]) groupedByLeague[league] = [];
+    groupedByLeague[league].push(match);
   });
 
   return (
@@ -48,19 +48,28 @@ export default async function MatchesPage() {
             <div className="w-2 h-8 bg-neon-lime" />
             <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase">Match <span className="text-neon-lime">Schedule</span></h1>
           </div>
-          <p className="text-white/40 font-bold uppercase tracking-widest text-sm">Upcoming European Fixtures / 2025-26 Season</p>
+          <p className="text-white/40 font-bold uppercase tracking-widest text-sm">League-wise European Fixtures / 2025-26 Season</p>
         </div>
 
         <AdPlaceholder position="header-bottom" />
 
-        <div className="space-y-16 mb-20">
-          {Object.entries(groupedMatches).map(([date, matches]) => (
-            <div key={date}>
+        <div className="space-y-20 mb-20">
+          {Object.entries(groupedByLeague).map(([leagueName, matches]) => (
+            <div key={leagueName}>
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-neon-lime" />
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                  <div className="text-xl">
+                    {leagueName.includes('プレミア') ? '🏴󠁧󠁢󠁥󠁮󠁧󠁿' : 
+                     leagueName.includes('ラ・リーガ') ? '🇪🇸' : 
+                     leagueName.includes('ブンデス') ? '🇩🇪' : 
+                     leagueName.includes('セリエA') ? '🇮🇹' : 
+                     leagueName.includes('チャンピオンズ') ? '🇪🇺' : '⚽'}
+                  </div>
                 </div>
-                <h2 className="text-2xl font-black italic tracking-tight">{date}</h2>
+                <div>
+                  <h2 className="text-3xl font-black italic tracking-tight uppercase">{leagueName}</h2>
+                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">{matches.length} Matches Found</span>
+                </div>
                 <div className="flex-1 h-px bg-white/5" />
               </div>
               
