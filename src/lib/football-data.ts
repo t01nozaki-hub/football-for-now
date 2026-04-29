@@ -44,7 +44,7 @@ export const LEAGUE_MAP: Record<string, string> = {
   'WC': 'ワールドカップ',
 };
 
-export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL', 'EL', 'DED', 'PPL'];
+export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL'];
 
 export const getBroadcastChannels = (leagueName: string): string[] => {
   const map: Record<string, string[]> = {

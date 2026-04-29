@@ -10,6 +10,8 @@ interface Match {
   id: number;
   utcDate: string;
   status: string;
+  matchday?: number;
+  stage?: string;
   homeTeam: { name: string; crest: string };
   awayTeam: { name: string; crest: string };
   score?: {
@@ -30,9 +32,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, leagueName }) => {
   const isFinished = match.status === 'FINISHED';
 
   const date = new Date(match.utcDate);
-  const jstDate = date.toLocaleString('ja-JP', { 
-    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', weekday: 'short'
-  });
+  const formattedDate = `${date.getMonth() + 1}/${date.getDate()} (${['日', '月', '火', '水', '木', '金', '土'][date.getDay()]})`;
+  const jstTime = date.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
 
   const channels = getBroadcastChannels(leagueName || '');
 
@@ -41,11 +42,24 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, leagueName }) => {
       whileHover={{ y: -5 }}
       className={`glass rounded-2xl p-6 transition-all group relative overflow-hidden ${isJPRelevant ? 'border-neon-lime/30 shadow-[0_0_20px_rgba(204,255,0,0.05)]' : 'hover:neon-border'}`}
     >
-      {/* Date & League */}
+      {/* Date & League & Matchday */}
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-2">
-          <div className={`w-1 h-4 rounded-full ${isFinished ? 'bg-white/20' : isJPRelevant ? 'bg-neon-lime animate-pulse' : 'bg-white/20'}`} />
-          <span className="text-xs font-bold text-white/60">{isFinished ? 'FINISHED' : `${jstDate} JST`}</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <div className={`w-1 h-3 rounded-full ${isFinished ? 'bg-white/20' : isJPRelevant ? 'bg-neon-lime animate-pulse' : 'bg-white/20'}`} />
+            <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
+              {isFinished ? 'FINISHED' : 'UPCOMING'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-black text-white">{formattedDate}</span>
+            {!isFinished && <span className="text-xs font-bold text-white/40">{jstTime}</span>}
+            <span className="text-[10px] font-bold text-neon-lime bg-neon-lime/10 px-1.5 py-0.5 rounded">
+              {match.stage && match.stage !== 'REGULAR_SEASON' 
+                ? match.stage.replace(/_/g, ' ') 
+                : match.matchday ? `第${match.matchday}節` : ''}
+            </span>
+          </div>
         </div>
         {leagueName && (
           <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/40 font-mono tracking-wider">
