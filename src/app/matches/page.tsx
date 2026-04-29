@@ -1,11 +1,9 @@
-import { fetchMatches, LEAGUE_MAP } from '@/lib/football-data';
+import { fetchMatches, LEAGUE_MAP, LEAGUES } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { MatchCard } from '@/components/MatchCard';
 import { ChevronLeft, Calendar } from 'lucide-react';
 import Link from 'next/link';
-
-import { fetchMatches, LEAGUE_MAP, LEAGUES } from '@/lib/football-data';
 
 export default async function MatchesPage() {
   const matchesData = await Promise.all(

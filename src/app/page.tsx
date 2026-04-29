@@ -4,6 +4,7 @@ import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Header, Footer } from '@/components/Navigation';
 import { ClientMatchList } from '@/components/ClientMatchList';
 import { TournamentBracket } from '@/components/TournamentBracket';
+import { MatchCard } from '@/components/MatchCard';
 import { ArrowUpRight } from 'lucide-react';
 
 import Link from 'next/link';
@@ -213,7 +214,7 @@ export default async function Home() {
 
         {/* Match List Section */}
         <section className="mb-16">
-          <ClientMatchList initialMatches={allMatches} />
+          <ClientMatchList initialMatches={matches} />
         </section>
 
         <AdPlaceholder position="footer-top" />

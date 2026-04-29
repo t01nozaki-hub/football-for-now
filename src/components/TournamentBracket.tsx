@@ -61,23 +61,23 @@ export const TournamentBracket = () => {
           <div className="space-y-12">
             <Match 
               stage="QF1"
-              team1={{ name: 'Real Madrid', logo: '⚪️', score: 4, isWinner: true }}
-              team2={{ name: 'Man City', logo: '🩵', score: 3 }}
+              team1={{ name: 'Bayern', logo: '🔴', score: 3, isWinner: true }}
+              team2={{ name: 'Real Madrid', logo: '⚪️', score: 2 }}
             />
             <Match 
               stage="QF2"
-              team1={{ name: 'Bayern', logo: '🔴', score: 2 }}
-              team2={{ name: 'Arsenal', logo: '🛑', score: 3, isWinner: true }}
+              team1={{ name: 'Arsenal', logo: '🛑', score: 3, isWinner: true }}
+              team2={{ name: 'Sporting', logo: '🦁', score: 1 }}
             />
             <Match 
               stage="QF3"
-              team1={{ name: 'Feyenoord', logo: '🔴⚪️', score: 3, isWinner: true }}
-              team2={{ name: 'Inter', logo: '🔵⚫️', score: 1 }}
+              team1={{ name: 'PSG', logo: '🔵🔴', score: 4, isWinner: true }}
+              team2={{ name: 'Liverpool', logo: '🔴', score: 2 }}
             />
             <Match 
               stage="QF4"
-              team1={{ name: 'PSG', logo: '🔵🔴', score: 2 }}
-              team2={{ name: 'Liverpool', logo: '🔴', score: 4, isWinner: true }}
+              team1={{ name: 'Atlético', logo: '⚪️🔴', score: 2, isWinner: true }}
+              team2={{ name: 'Man City', logo: '🩵', score: 1 }}
             />
           </div>
         </div>
@@ -91,13 +91,13 @@ export const TournamentBracket = () => {
           <div className="space-y-32">
             <Match 
               stage="SF1"
-              team1={{ name: 'Real Madrid', logo: '⚪️', score: 2, isWinner: true }}
-              team2={{ name: 'Arsenal', logo: '🛑', score: 1 }}
+              team1={{ name: 'Bayern', logo: '🔴', score: 0 }}
+              team2={{ name: 'PSG', logo: '🔵🔴', score: 0 }}
             />
             <Match 
               stage="SF2"
-              team1={{ name: 'Feyenoord', logo: '🔴⚪️', score: 2, isWinner: true }}
-              team2={{ name: 'Liverpool', logo: '🔴', score: 1 }}
+              team1={{ name: 'Arsenal', logo: '🛑', score: 0 }}
+              team2={{ name: 'Atlético', logo: '⚪️🔴', score: 0 }}
             />
           </div>
         </div>
@@ -121,19 +121,19 @@ export const TournamentBracket = () => {
             
             <div className="flex items-center justify-between gap-4">
               <div className="flex flex-col items-center gap-3 flex-1">
-                <span className="text-4xl">⚪️</span>
-                <span className="text-[10px] font-black uppercase text-center leading-tight">Real Madrid</span>
+                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl">?</div>
+                <span className="text-[10px] font-black uppercase text-center leading-tight">SF1 Winner</span>
               </div>
               <div className="text-2xl font-black italic text-white/10">VS</div>
               <div className="flex flex-col items-center gap-3 flex-1">
-                <span className="text-4xl animate-pulse">🔴⚪️</span>
-                <span className="text-[10px] font-black uppercase text-center leading-tight">Feyenoord</span>
+                <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl">?</div>
+                <span className="text-[10px] font-black uppercase text-center leading-tight">SF2 Winner</span>
               </div>
             </div>
             
             <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-center gap-2">
               <Star className="w-3 h-3 text-neon-lime" />
-              <span className="text-[9px] font-black uppercase tracking-widest text-white/60">JP Warriors Final Battle</span>
+              <span className="text-[9px] font-black uppercase tracking-widest text-white/60">Final Battle in Paris</span>
             </div>
           </motion.div>
         </div>
