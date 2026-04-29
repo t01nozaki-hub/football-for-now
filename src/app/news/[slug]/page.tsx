@@ -108,10 +108,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
           <AdPlaceholder position="header-bottom" />
 
-          {/* Image Placeholder */}
-          <div className="w-full aspect-video rounded-[40px] bg-white/5 border border-white/10 mb-12 flex items-center justify-center text-9xl">
-            {article.image}
-          </div>
+          {/* Featured Image - Only show if it's a real image path/url or specifically requested */}
+          {article.image && !['🔴', '🏆', '🩵'].includes(article.image) && (
+            <div className="w-full aspect-video rounded-[40px] bg-white/5 border border-white/10 mb-12 overflow-hidden">
+              <img src={article.image} alt="" className="w-full h-full object-cover" />
+            </div>
+          )}
 
           {/* Content */}
           <div className="glass rounded-[40px] p-8 md:p-16 border border-white/5 mb-20">

@@ -111,114 +111,85 @@ export default async function Home() {
           ))}
         </div>
 
+        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           <div className="lg:col-span-2 space-y-12">
-            {/* Tournament Bracket Section */}
+            {/* Matches Section - Curated for Clarity */}
             <section>
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-neon-lime" />
-                  <h2 className="text-2xl font-black italic tracking-tight uppercase">CL <span className="text-neon-lime">Tournament</span></h2>
-                </div>
-              </div>
-              <TournamentBracket />
-            </section>
-
-            {/* Matches Section */}
-            <section>
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-neon-lime" />
+                  <div className="w-1.5 h-6 bg-neon-lime shadow-[0_0_15px_rgba(204,255,0,0.5)]" />
                   <h2 className="text-2xl font-black italic tracking-tight uppercase">Recent <span className="text-neon-lime">Results</span></h2>
                 </div>
-                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">View All Results</Link>
+                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">View All →</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {matches.filter((m: any) => m.status === 'FINISHED').slice(0, 4).map((match: any) => (
-                  <MatchCard key={match.id} match={match} />
+                  <MatchCard key={match.id} match={match} leagueName={match.leagueName} />
                 ))}
-                {matches.filter((m: any) => m.status === 'FINISHED').length === 0 && (
-                  <div className="col-span-2 glass rounded-3xl p-8 border border-white/5 text-center text-white/20 text-xs font-bold uppercase tracking-widest">
-                    No recent results available
-                  </div>
-                )}
               </div>
             </section>
 
             <section>
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
-                  <div className="w-1.5 h-6 bg-neon-lime" />
+                  <div className="w-1.5 h-6 bg-neon-lime shadow-[0_0_15px_rgba(204,255,0,0.5)]" />
                   <h2 className="text-2xl font-black italic tracking-tight uppercase">Upcoming <span className="text-neon-lime">Fixtures</span></h2>
                 </div>
-                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">View Full Schedule</Link>
+                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">Full Schedule →</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {matches.filter((m: any) => m.status === 'SCHEDULED').slice(0, 6).map((match: any) => (
-                  <MatchCard key={match.id} match={match} />
+                {matches.filter((m: any) => m.status === 'SCHEDULED').slice(0, 4).map((match: any) => (
+                  <MatchCard key={match.id} match={match} leagueName={match.leagueName} />
                 ))}
+              </div>
+            </section>
+          </div>
+
+          {/* Sidebar Area */}
+          <div className="space-y-8">
+            <AdPlaceholder position="sidebar-top" />
+            
+            {/* Japanese Warriors Section - Moved to Sidebar for compact feel */}
+            <section className="glass rounded-[32px] p-6 border border-white/5">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-sm font-black italic tracking-tight uppercase">JP <span className="text-neon-lime">Warriors</span></h3>
+                <Link href="/japanese-players" className="text-[8px] font-black uppercase tracking-widest text-white/20 hover:text-neon-lime transition-colors">
+                  All →
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {JAPANESE_PLAYERS.slice(0, 6).map((player) => {
+                   const slug = player.name.toLowerCase().replace(/\s+/g, '-');
+                   return (
+                     <Link key={player.name} href={`/japanese-players/${slug}`} className="bg-white/5 rounded-xl p-3 flex flex-col items-center gap-2 group hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
+                       <span className="text-[18px]">🇯🇵</span>
+                       <span className="text-[9px] font-black text-center leading-tight group-hover:text-neon-lime">
+                         {player.jpName}
+                       </span>
+                     </Link>
+                   );
+                })}
               </div>
             </section>
           </div>
         </div>
 
-        {/* Featured Warriors Quick Access */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-1.5 h-6 bg-neon-lime" />
-              <h3 className="text-xl font-black italic tracking-tight uppercase">Japanese <span className="text-neon-lime">Warriors</span></h3>
-            </div>
-            <Link href="/japanese-players" className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-neon-lime transition-colors">
-              Full Directory →
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-            {JAPANESE_PLAYERS.slice(0, 8).map((player) => {
-               const slug = player.name.toLowerCase().replace(/\s+/g, '-');
-               return (
-                 <Link key={player.name} href={`/japanese-players/${slug}`} className="glass rounded-2xl p-4 flex flex-col items-center gap-3 group cursor-pointer hover:neon-border transition-all">
-                   <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-105 transition-transform text-3xl">
-                     🇯🇵
-                   </div>
-                   <div className="text-center">
-                     <span className="text-[10px] font-black block mb-0.5 group-hover:text-neon-lime transition-colors">
-                       {player.jpName}
-                     </span>
-                     <span className="text-[8px] font-bold text-white/20 uppercase tracking-tighter whitespace-nowrap">
-                       {player.team.split(' ')[0]}
-                     </span>
-                   </div>
-                 </Link>
-               );
-            })}
-          </div>
-        </section>
-
-        <AdPlaceholder position="header-bottom" />
-
-        {/* CL Tournament Section */}
+        {/* CL Tournament Bracket - Centered & Prominent */}
         <section className="mb-20">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
-              <div className="w-1.5 h-6 bg-neon-lime" />
-              <h2 className="text-2xl font-black italic tracking-tight uppercase">CL <span className="text-neon-lime">Tournament</span></h2>
+              <div className="w-1.5 h-6 bg-neon-lime shadow-[0_0_15px_rgba(204,255,0,0.5)]" />
+              <h2 className="text-3xl font-black italic tracking-tight uppercase">CL <span className="text-neon-lime">Road to Final</span></h2>
             </div>
             <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
-              <span className="text-[8px] font-black uppercase tracking-widest text-white/40">Next: Final</span>
+              <span className="text-[8px] font-black uppercase tracking-widest text-white/40">Real-time Bracket</span>
             </div>
           </div>
           <TournamentBracket />
         </section>
-        <AdPlaceholder position="content-middle" />
-
-        {/* Match List Section */}
-        <section className="mb-16">
-          <ClientMatchList initialMatches={matches} />
-        </section>
 
         <AdPlaceholder position="footer-top" />
-
       </main>
 
       <Footer />

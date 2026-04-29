@@ -1,196 +1,170 @@
+import { fetchTeamData, fetchTeamMatches, translateTeamName, getJapanesePlayersInTeam, MAJOR_TEAMS } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
-import { translateTeamName, getJapanesePlayersInTeam, JAPANESE_PLAYERS, fetchTeamData, fetchTeamMatches } from '@/lib/football-data';
-import { ChevronLeft, Users, Calendar, Trophy, Star, ExternalLink } from 'lucide-react';
-
+import { MatchCard } from '@/components/MatchCard';
+import { Shield, Users, Calendar, Trophy, ChevronLeft, Star, Globe } from 'lucide-react';
 import Link from 'next/link';
 
 export async function generateStaticParams() {
-  // 主要リーグの主要チームIDおよび日本人所属チームを網羅
-  const teamIds = [
-    '57', '61', '64', '65', '66', '73', '1044', '328', '338', '340', // PL: Arsenal, Chelsea, Liverpool, ManCity, ManUtd, Spurs, Brighton, Burnley, Leicester, Southampton
-    '86', '81', '78', '354', '298', '94', // PD: Real Madrid, Barca, Atletico, Sociedad, Girona, Villarreal
-    '5', '4', '3', '721', '503', '28', '19', '18', '17', '16', // BL1: Bayern, Dortmund, Leverkusen, Leipzig, Freiburg, Werder, Frankfurt, Gladbach, Freiburg, Mainz
-    '108', '98', '109', '113', '110', '115', '455', // SA: Inter, Milan, Juve, Napoli, Lazio, Roma, Parma
-    '524', '548', '523', '516', '521', '512', '529', '547', // FL1: PSG, Monaco, Lyon, Marseille, Lille, Brest, Rennes, Reims
-    '675', '678', '674', '682', // DED: Feyenoord, Ajax, PSV, AZ
-    '498', '503', '495', // PPL: Sporting, Porto, Benfica
-    '568', '562', '563', // Belgium: Genk, Anderlecht, Club Brugge
-  ];
-  return teamIds.map((id) => ({ id }));
+  return MAJOR_TEAMS.map((team) => ({
+    id: team.id,
+  }));
 }
 
-export default async function TeamPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  if (!id || id === 'undefined') return null;
-
-  let team, upcomingMatches, recentMatches;
+export default async function TeamDetailPage({ params }: { params: { id: string } }) {
+  const teamId = params.id;
   
+  let team: any = null;
+  let matches: any = null;
+  let finishedMatches: any = null;
+
   try {
-    const [teamData, upcomingData, recentData] = await Promise.all([
-      fetchTeamData(id),
-      fetchTeamMatches(id, 'SCHEDULED'),
-      fetchTeamMatches(id, 'FINISHED')
-    ]);
-    team = teamData;
-    upcomingMatches = upcomingData;
-    recentMatches = recentData;
+    team = await fetchTeamData(teamId);
+    matches = await fetchTeamMatches(teamId, 'SCHEDULED');
+    finishedMatches = await fetchTeamMatches(teamId, 'FINISHED');
   } catch (e) {
-    console.error(`Team fetch failed for ${id}:`, e);
-    // ... error UI
+    console.error(e);
   }
 
-  if (!team) return null; // Safety
+  if (!team) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-black italic mb-4">TEAM NOT FOUND</h2>
+            <Link href="/teams" className="text-neon-lime font-bold uppercase tracking-widest text-xs hover:underline">
+              Back to Directory
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const jpPlayers = getJapanesePlayersInTeam(team.name);
+  const upcoming = matches?.matches || [];
+  const results = (finishedMatches?.matches || []).reverse().slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white selection:bg-neon-lime selection:text-black">
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <Link href="/" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group">
+        <Link href="/teams" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group">
           <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-bold uppercase tracking-widest">Back to Dashboard</span>
+          <span className="text-sm font-bold uppercase tracking-widest">Club Directory</span>
         </Link>
 
-        {/* Team Header */}
-        <div className="glass rounded-3xl p-8 md:p-12 mb-12 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-neon-lime/5 blur-[100px] -mr-48 -mt-48" />
+        {/* Hero Section */}
+        <div className="glass rounded-[40px] p-8 md:p-12 mb-12 border border-white/5 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-neon-lime/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+          
           <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-            <img src={team.crest} alt="" className="w-32 h-32 md:w-48 md:h-48 object-contain" />
+            <div className="w-32 h-32 md:w-48 md:h-48 bg-white/5 rounded-3xl border border-white/10 p-6 flex items-center justify-center shadow-2xl">
+              <img src={team.crest} alt={team.name} className="w-full h-full object-contain" />
+            </div>
             <div className="text-center md:text-left">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-4">
-                <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-white/10 rounded-full text-white/60">
-                  {team.runningCompetitions[0]?.name || 'League'}
-                </span>
-                {jpPlayers.length > 0 && (
-                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-neon-lime text-black rounded-full">
-                    🇯🇵 日本人選手所属
+              <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
+                {team.runningCompetitions?.map((comp: any) => (
+                  <span key={comp.id} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[9px] font-black uppercase tracking-widest text-white/40">
+                    {comp.name}
                   </span>
-                )}
+                ))}
               </div>
-              <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter uppercase mb-4">
+              <h1 className="text-4xl md:text-7xl font-black italic tracking-tighter uppercase mb-4 leading-none">
                 {translateTeamName(team.name)}
               </h1>
-              <div className="flex flex-wrap justify-center md:justify-start gap-6 text-white/40 text-sm font-bold uppercase tracking-widest">
-                <span className="flex items-center gap-2"><Trophy className="w-4 h-4" /> Founded: {team.founded}</span>
-                <span className="flex items-center gap-2"><Users className="w-4 h-4" /> Venue: {team.venue}</span>
+              <div className="flex items-center justify-center md:justify-start gap-6 text-white/40">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
+                  <Shield className="w-4 h-4 text-neon-lime" />
+                  Founded in {team.founded || 'N/A'}
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neon-lime">
+                  <Globe className="w-4 h-4" />
+                  {team.area?.name}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Squad Section */}
+          <div className="lg:col-span-2 space-y-8">
+            <section className="glass rounded-[32px] p-8 border border-white/5">
+              <div className="flex items-center gap-3 mb-8">
+                <Users className="w-6 h-6 text-neon-lime" />
+                <h2 className="text-2xl font-black italic tracking-tight uppercase">Current <span className="text-neon-lime">Squad</span></h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {team.squad?.length > 0 ? (
+                  team.squad.map((player: any) => {
+                    const isJP = jpPlayers.includes(player.name) || (player.nationality === 'Japan');
+                    return (
+                      <div key={player.id} className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-transparent hover:border-white/10 transition-all group">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-sm ${isJP ? 'bg-neon-lime/20 border border-neon-lime/30' : ''}`}>
+                            {isJP ? '🇯🇵' : player.position?.charAt(0) || '?'}
+                          </div>
+                          <div>
+                            <span className={`text-sm font-bold block leading-tight ${isJP ? 'text-neon-lime' : ''}`}>
+                              {player.name}
+                            </span>
+                            <span className="text-[10px] text-white/20 font-black uppercase tracking-widest">
+                              {player.position || 'Unknown'}
+                            </span>
+                          </div>
+                        </div>
+                        {isJP && <Star className="w-3 h-3 text-neon-lime fill-neon-lime" />}
+                        <span className="text-[10px] font-mono text-white/10">{player.nationality}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-white/20 text-xs font-bold uppercase tracking-widest col-span-2 py-8 text-center">Squad information unavailable</p>
+                )}
+              </div>
+            </section>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           {/* Matches Sidebar */}
-          <div className="lg:col-span-1 space-y-8">
-            {/* Upcoming */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <Calendar className="w-5 h-5 text-neon-lime" />
-                <h2 className="text-xl font-black italic uppercase tracking-tight">Upcoming</h2>
+          <div className="space-y-8">
+            <section className="glass rounded-[32px] p-8 border border-white/5">
+              <div className="flex items-center gap-3 mb-8">
+                <Calendar className="w-6 h-6 text-neon-lime" />
+                <h2 className="text-xl font-black italic tracking-tight uppercase">Next <span className="text-neon-lime">Match</span></h2>
+              </div>
+              {upcoming.length > 0 ? (
+                <MatchCard match={upcoming[0]} />
+              ) : (
+                <div className="bg-white/5 rounded-2xl p-6 text-center">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/20">No scheduled matches</p>
+                </div>
+              )}
+            </section>
+
+            <section className="glass rounded-[32px] p-8 border border-white/5">
+              <div className="flex items-center gap-3 mb-8">
+                <Trophy className="w-6 h-6 text-neon-lime" />
+                <h2 className="text-xl font-black italic tracking-tight uppercase">Recent <span className="text-neon-lime">Results</span></h2>
               </div>
               <div className="space-y-4">
-                {upcomingMatches.matches.slice(0, 3).map((match: any) => (
-                  <div key={match.id} className="glass rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors">
-                    <span className="text-[10px] text-white/40 font-bold block mb-2">
-                      {new Date(match.utcDate).toLocaleDateString('ja-JP')}
-                    </span>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-sm font-bold truncate">{translateTeamName(match.homeTeam.name)}</span>
-                      <span className="text-[10px] font-black text-white/20 italic">VS</span>
-                      <span className="text-sm font-bold truncate text-right">{translateTeamName(match.awayTeam.name)}</span>
-                    </div>
-                  </div>
-                ))}
-                {upcomingMatches.matches.length === 0 && <p className="text-white/20 text-sm italic">No scheduled matches</p>}
+                {results.length > 0 ? (
+                  results.map((match: any) => (
+                    <MatchCard key={match.id} match={match} />
+                  ))
+                ) : (
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/20 text-center py-4">No recent results</p>
+                )}
               </div>
-            </div>
+            </section>
 
-            {/* Recent Results */}
-            <div>
-              <div className="flex items-center gap-3 mb-6 pt-8 border-t border-white/5">
-                <Trophy className="w-5 h-5 text-neon-lime" />
-                <h2 className="text-xl font-black italic uppercase tracking-tight">Recent Results</h2>
-              </div>
-              <div className="space-y-4">
-                {(recentMatches.matches || []).reverse().slice(0, 3).map((match: any) => (
-                  <div key={match.id} className="glass rounded-2xl p-4 border border-white/5 bg-white/5">
-                    <span className="text-[10px] text-white/40 font-bold block mb-2">
-                      {new Date(match.utcDate).toLocaleDateString('ja-JP')}
-                    </span>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-xs font-bold truncate flex-1">{translateTeamName(match.homeTeam.name)}</span>
-                      <div className="px-3 py-1 bg-black rounded text-sm font-black italic text-neon-lime">
-                        {match.score.fullTime.home} - {match.score.fullTime.away}
-                      </div>
-                      <span className="text-xs font-bold truncate flex-1 text-right">{translateTeamName(match.awayTeam.name)}</span>
-                    </div>
-                  </div>
-                ))}
-                {(!recentMatches.matches || recentMatches.matches.length === 0) && <p className="text-white/20 text-sm italic">No recent results</p>}
-              </div>
-            </div>
-          </div>
-
-          {/* Squad List */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <Users className="w-5 h-5 text-neon-lime" />
-              <h2 className="text-xl font-black italic uppercase tracking-tight">Squad</h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {team.squad.map((player: any) => {
-                const isJP = JAPANESE_PLAYERS.some(p => p.name === player.name);
-                return (
-                  <div key={player.id} className={`glass rounded-2xl p-4 flex items-center justify-between border ${isJP ? 'border-neon-lime/30' : 'border-white/5'}`}>
-                    <div>
-                      <span className="text-xs font-bold block mb-0.5">{player.name}</span>
-                      <span className="text-[10px] text-white/40 uppercase font-black tracking-widest">{player.position}</span>
-                    </div>
-                    {isJP && (
-                      <div className="w-6 h-6 bg-neon-lime rounded-full flex items-center justify-center">
-                        <Star className="w-3.5 h-3.5 text-black fill-black" />
-                      </div>
-                    )}
-                    <span className="text-[10px] font-mono text-white/20">{player.nationality}</span>
-                  </div>
-                );
-              })}
-            </div>
+            <AdPlaceholder position="sidebar-bottom" />
           </div>
         </div>
-
-
-        {/* Affiliate / Goods Section */}
-        <section className="mb-20">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-2 h-6 bg-neon-lime" />
-            <h2 className="text-2xl font-black italic uppercase tracking-tight">Official Goods</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: '2024-25 Home Jersey', price: '¥14,500', icon: '👕' },
-              { name: 'Official Team Scarf', price: '¥3,200', icon: '🧣' },
-              { name: 'Training Jacket', price: '¥11,000', icon: '🧥' },
-            ].map(item => (
-              <div key={item.name} className="glass rounded-3xl p-6 border border-white/5 flex items-center gap-6 group cursor-pointer hover:border-neon-lime/30 transition-all">
-                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold mb-1">{item.name}</h4>
-                  <p className="text-neon-lime font-black text-lg italic">{item.price}</p>
-                  <div className="flex items-center gap-1 mt-2 text-[8px] font-black uppercase tracking-widest text-white/20">
-                    Amazon.co.jp <ExternalLink className="w-2 h-2" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
         <AdPlaceholder position="footer-top" />
       </main>
@@ -199,4 +173,3 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
     </div>
   );
 }
-
