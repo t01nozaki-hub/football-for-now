@@ -35,6 +35,7 @@ export const Header = () => {
             <Link href="/teams" className="hover:text-neon-lime transition-colors">TEAMS</Link>
             <Link href="/japanese-players" className="hover:text-neon-lime transition-colors">JAPANESE</Link>
             <Link href="/guide" className="hover:text-neon-lime transition-colors">GUIDE</Link>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" className="hover:text-neon-lime transition-colors">CONTACT</a>
 
 
 
@@ -89,6 +90,7 @@ export const Header = () => {
             <Link href="/teams" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">TEAMS</Link>
             <Link href="/japanese-players" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">JAPANESE</Link>
             <Link href="/guide" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">GUIDE</Link>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">CONTACT</a>
 
 
 
@@ -148,7 +150,7 @@ export const Footer = () => {
               <li><Link href="/legal/privacy" className="hover:text-neon-lime transition-colors">PRIVACY POLICY</Link></li>
               <li><Link href="/legal/terms" className="hover:text-neon-lime transition-colors">TERMS OF SERVICE</Link></li>
               <li><Link href="/about" className="hover:text-neon-lime transition-colors">ABOUT US</Link></li>
-              <li><Link href="/contact" className="hover:text-neon-lime transition-colors">CONTACT</Link></li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" className="hover:text-neon-lime transition-colors text-neon-lime">CONTACT (お問い合わせ)</a></li>
 
             </ul>
           </div>
