@@ -165,6 +165,9 @@ export const Footer = () => {
             DATA PROVIDED BY FOOTBALL-DATA.ORG.
           </p>
         </div>
+        <p className="mt-8 text-[8px] font-medium text-white/10 text-center uppercase tracking-widest">
+          football for nowは、Amazon.co.jpを宣伝しリンクすることによって紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
+        </p>
       </div>
     </footer>
   );
