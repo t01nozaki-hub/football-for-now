@@ -1,6 +1,9 @@
 name: Auto Update & Deploy
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # 6時間ごとに自動実行 (UTC 0, 6, 12, 18) -> 日本時間 9, 15, 21, 3時
     - cron: '0 */6 * * *'
