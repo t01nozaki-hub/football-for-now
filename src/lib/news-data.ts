@@ -4,7 +4,7 @@ export const NEWS_ARTICLES = [
     slug: 'real-madrid-mbappe-cl-impact',
     title: 'エムバペ、レアルでの2シーズン目で真価。CL準決勝での圧巻パフォーマンスで決勝進出に王手',
     category: 'チャンピオンズリーグ',
-    time: '20分前',
+    time: '2026/05/01',
     image: '⚪️',
     summary: '欧州の頂点を目指すレアル・マドリードにおいて、キリアン・エムバペが絶対的なエースとして君臨。シーズン終盤の勝負強さは異次元の領域へ。',
     content: `
@@ -20,7 +20,7 @@ export const NEWS_ARTICLES = [
     slug: 'bayern-bundesliga-champions-2026',
     title: 'バイエルン・ミュンヘン、2025/26ブンデスリーガ優勝を確定。伊藤洋輝が主力としてタイトル獲得',
     category: 'ブンデスリーガ',
-    time: '3時間前',
+    time: '2026/05/01',
     image: '🏆',
     summary: 'シーズン終盤を待たずして王座を奪還。伊藤洋輝は安定した守備とビルドアップで、加入1年目にして優勝の立役者となりました。',
     content: `
@@ -38,7 +38,7 @@ export const NEWS_ARTICLES = [
     slug: 'bernardo-silva-city-exit-rumor',
     title: 'ベルナルド・シウバ、今季限りでマンチェスター・シティ退団か。欧州複数クラブが争奪戦へ',
     category: 'プレミアリーグ',
-    time: '6時間前',
+    time: '2026/05/01',
     image: '🩵',
     summary: '長年シティの中盤を支えた名手が新天地を求める模様。プレミアリーグの優勝争いの中、去就に注目が集まっています。',
     content: `
@@ -54,7 +54,7 @@ export const NEWS_ARTICLES = [
     slug: 'united-manchester-win-brentford',
     title: 'マンチェスター・U、ブレントフォードに競り勝ちCL出場権争いに踏みとどまる',
     category: 'プレミアリーグ',
-    time: '9時間前',
+    time: '2026/05/01',
     image: '👹',
     summary: '2-1の逆転勝利。苦戦が続く今季のユナイテッドだが、トップ4入りの可能性を繋ぐ貴重な勝ち点3を獲得。',
     content: `
@@ -70,7 +70,7 @@ export const NEWS_ARTICLES = [
     slug: 'barcelona-la-liga-lead',
     title: 'ラ・リーガ：バルセロナが首位を堅持。レアル・マドリードとの勝ち点差を維持し逃げ切り狙う',
     category: 'ラ・リーガ',
-    time: '15時間前',
+    time: '2026/04/30',
     image: '🇪🇸',
     summary: 'リーグ最終盤に向けて一歩も譲らないデッドヒート。バルサの若手陣が躍動し、タイトル獲得への期待が高まる。',
     content: `
