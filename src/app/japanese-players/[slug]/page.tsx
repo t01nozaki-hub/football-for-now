@@ -1,5 +1,4 @@
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { JAPANESE_PLAYERS, translateTeamName } from '@/lib/football-data';
 import { ChevronLeft, Star, TrendingUp, Shield, Zap, Target } from 'lucide-react';
 import Link from 'next/link';
@@ -68,7 +67,6 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
           </div>
         </section>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           {/* Stats Radar Mock */}
@@ -142,7 +140,6 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
           </div>
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

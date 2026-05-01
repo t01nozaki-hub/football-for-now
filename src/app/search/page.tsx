@@ -2,7 +2,6 @@
 
 import { JAPANESE_PLAYERS, MAJOR_TEAMS, translateTeamName } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Search, ChevronLeft, User, Shield, ExternalLink, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -43,7 +42,6 @@ function SearchResults() {
         </div>
       </div>
 
-      <AdPlaceholder position="header-bottom" />
 
       {filteredTeams.length > 0 && (
         <section className="mb-16">
@@ -123,7 +121,6 @@ function SearchResults() {
         </div>
       )}
 
-      <AdPlaceholder position="footer-top" />
     </main>
   );
 }

@@ -1,9 +1,9 @@
-import { fetchTeamData, fetchTeamMatches, translateTeamName, getJapanesePlayersInTeam, MAJOR_TEAMS } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
+import { fetchTeamData, fetchTeamMatches, translateTeamName, getJapanesePlayersInTeam, MAJOR_TEAMS } from '@/lib/football-data';
 import { MatchCard } from '@/components/MatchCard';
 import { Shield, Users, Calendar, Trophy, ChevronLeft, Star, Globe } from 'lucide-react';
 import Link from 'next/link';
+import { AnimatedSection, AnimatedHover } from '@/components/AnimatedSection';
 
 export async function generateStaticParams() {
   return MAJOR_TEAMS.map((team) => ({
@@ -52,19 +52,32 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <Link href="/teams" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group">
-          <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-bold uppercase tracking-widest">Club Directory</span>
-        </Link>
+        <AnimatedSection
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Link href="/teams" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group w-fit">
+            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm font-bold uppercase tracking-widest">Club Directory</span>
+          </Link>
+        </AnimatedSection>
 
         {/* Hero Section */}
-        <div className="glass rounded-[40px] p-8 md:p-12 mb-12 border border-white/5 relative overflow-hidden">
+        <AnimatedSection 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass rounded-[40px] p-8 md:p-12 mb-12 border border-white/5 relative overflow-hidden"
+        >
           <div className="absolute top-0 right-0 w-64 h-64 bg-neon-lime/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
           
           <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
-            <div className="w-32 h-32 md:w-48 md:h-48 bg-white/5 rounded-3xl border border-white/10 p-6 flex items-center justify-center shadow-2xl">
-              <img src={team.crest} alt={team.name} className="w-full h-full object-contain" />
-            </div>
+            <AnimatedHover 
+              whileHover={{ scale: 1.05 }}
+              className="w-32 h-32 md:w-48 md:h-48 bg-white/5 rounded-3xl border border-white/10 p-6 flex items-center justify-center shadow-2xl"
+            >
+              <img src={team.crest} alt={team.name} className="w-full h-full object-contain drop-shadow-2xl" />
+            </AnimatedHover>
             <div className="text-center md:text-left">
               <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
                 {team.runningCompetitions?.map((comp: any) => (
@@ -88,11 +101,16 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Squad Section */}
-          <div className="lg:col-span-2 space-y-8">
+          <AnimatedSection 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-2 space-y-8"
+          >
             <section className="glass rounded-[32px] p-8 border border-white/5">
               <div className="flex items-center gap-3 mb-8">
                 <Users className="w-6 h-6 text-neon-lime" />
@@ -101,10 +119,16 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {team.squad?.length > 0 ? (
-                  team.squad.map((player: any) => {
+                  team.squad.map((player: any, idx: number) => {
                     const isJP = jpPlayers.includes(player.name) || (player.nationality === 'Japan');
                     return (
-                      <div key={player.id} className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-transparent hover:border-white/10 transition-all group">
+                      <AnimatedSection 
+                        key={player.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3 + (idx * 0.05) }}
+                        className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-transparent hover:border-white/10 transition-all group"
+                      >
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-sm ${isJP ? 'bg-neon-lime/20 border border-neon-lime/30' : ''}`}>
                             {isJP ? '🇯🇵' : player.position?.charAt(0) || '?'}
@@ -120,7 +144,7 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                         </div>
                         {isJP && <Star className="w-3 h-3 text-neon-lime fill-neon-lime" />}
                         <span className="text-[10px] font-mono text-white/10">{player.nationality}</span>
-                      </div>
+                      </AnimatedSection>
                     );
                   })
                 ) : (
@@ -128,11 +152,16 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                 )}
               </div>
             </section>
-          </div>
+          </AnimatedSection>
 
           {/* Matches Sidebar */}
           <div className="space-y-8">
-            <section className="glass rounded-[32px] p-8 border border-white/5">
+            <AnimatedSection 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="glass rounded-[32px] p-8 border border-white/5"
+            >
               <div className="flex items-center gap-3 mb-8">
                 <Calendar className="w-6 h-6 text-neon-lime" />
                 <h2 className="text-xl font-black italic tracking-tight uppercase">Next <span className="text-neon-lime">Match</span></h2>
@@ -144,9 +173,14 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                   <p className="text-[10px] font-black uppercase tracking-widest text-white/20">No scheduled matches</p>
                 </div>
               )}
-            </section>
+            </AnimatedSection>
 
-            <section className="glass rounded-[32px] p-8 border border-white/5">
+            <AnimatedSection 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="glass rounded-[32px] p-8 border border-white/5"
+            >
               <div className="flex items-center gap-3 mb-8">
                 <Trophy className="w-6 h-6 text-neon-lime" />
                 <h2 className="text-xl font-black italic tracking-tight uppercase">Recent <span className="text-neon-lime">Results</span></h2>
@@ -160,13 +194,11 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                   <p className="text-[10px] font-black uppercase tracking-widest text-white/20 text-center py-4">No recent results</p>
                 )}
               </div>
-            </section>
+            </AnimatedSection>
 
-            <AdPlaceholder position="sidebar-bottom" />
           </div>
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

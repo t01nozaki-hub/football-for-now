@@ -1,10 +1,9 @@
 import { fetchStandings, fetchMatches, LEAGUE_MAP, JAPANESE_PLAYERS, LEAGUES } from '@/lib/football-data';
 import { StandingCard } from '@/components/StandingCard';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
+import { MatchCard } from '@/components/MatchCard';
 import { Header, Footer } from '@/components/Navigation';
 import { ClientMatchList } from '@/components/ClientMatchList';
 import { TournamentBracket } from '@/components/TournamentBracket';
-import { MatchCard } from '@/components/MatchCard';
 import { ArrowUpRight } from 'lucide-react';
 
 import Link from 'next/link';
@@ -148,7 +147,6 @@ export default async function Home() {
 
           {/* Sidebar Area */}
           <div className="space-y-8">
-            <AdPlaceholder position="sidebar-top" />
             
             {/* Japanese Warriors Section - Moved to Sidebar for compact feel */}
             <section className="glass rounded-[32px] p-6 border border-white/5">
@@ -189,7 +187,6 @@ export default async function Home() {
           <TournamentBracket />
         </section>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

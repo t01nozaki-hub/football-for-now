@@ -1,5 +1,4 @@
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Newspaper, Clock, TrendingUp, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -24,7 +23,6 @@ export default function NewsPage() {
           <p className="text-white/40 font-bold uppercase tracking-widest text-sm">欧州サッカーの最新トピックスを凝縮</p>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           {/* Main Feed */}
@@ -63,10 +61,10 @@ export default function NewsPage() {
               </h3>
               <div className="space-y-6">
                 {[
-                  'エムバペ レアルで初ゴール',
-                  'CL 準々決勝の組み合わせ決定',
-                  'バイエルン ブンデス優勝',
-                  'ラ・リーガ 優勝争いの行方',
+                  'エムバペ CL得点王へ独走',
+                  'CL 準決勝第2戦の見どころ',
+                  'バイエルン ブンデス優勝確定',
+                  'ラ・リーガ 優勝の行方は最終節へ',
                 ].map((topic, i) => (
                   <div key={topic} className="flex items-center gap-4 group cursor-pointer">
                     <span className="text-xl font-black italic text-white/10 group-hover:text-neon-lime transition-colors">0{i+1}</span>
@@ -76,11 +74,9 @@ export default function NewsPage() {
               </div>
             </div>
 
-            <AdPlaceholder position="content-middle" />
           </div>
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

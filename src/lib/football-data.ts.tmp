@@ -1,0 +1,40 @@
+const API_TOKEN = process.env.NEXT_PUBLIC_FOOTBALL_API_TOKEN || '';
+const BASE_URL = 'https://api.football-data.org/v4';
+
+import { getWithBuildCache } from './build-cache';
+
+// Rate limit helper for Free Tier (10 requests/minute)
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function fetchWithRetry(url: string, options: any, retries = 10) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.status === 429) {
+        console.warn(`Rate limit (429) hit for ${url}. Waiting 30s...`);
+        await sleep(30000);
+        continue;
+      }
+      if (!res.ok) {
+        console.error(`API Error ${res.status}: ${res.statusText} for ${url}`);
+        await sleep(5000);
+        continue;
+      }
+      await sleep(10000); // 10s between requests
+      return res.json();
+    } catch (e) {
+      console.error(`Fetch exception for ${url}:`, e);
+      if (i === retries - 1) throw e;
+      await sleep(5000);
+    }
+  }
+  throw new Error(`Failed to fetch after ${retries} retries`);
+}
+
+export const LEAGUE_MAP: Record<string, string> = {
+  'PL': 'プレミアリーグ',
+  'PD': 'ラ・リーガ',
+  'BL1': 'ブンデスリーガ',
+  'SA': 'セリエA',
+  'FL1': 'リーグ・アン',
+  'CL': 'チャンピオンズリーグ',

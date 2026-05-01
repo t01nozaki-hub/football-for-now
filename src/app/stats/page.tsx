@@ -1,6 +1,5 @@
 import { fetchScorers, LEAGUE_MAP, translateTeamName } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Target, Trophy, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -41,7 +40,6 @@ export default async function StatsPage() {
           <p className="text-white/40 font-bold uppercase tracking-widest text-sm">各リーグ得点ランキング トップ10</p>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {scorersData.filter(Boolean).map((league: any) => (
@@ -80,7 +78,6 @@ export default async function StatsPage() {
           ))}
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

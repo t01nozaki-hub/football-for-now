@@ -1,4 +1,4 @@
-const API_TOKEN = '74deb885ab8f42788668f23b17495d75';
+const API_TOKEN = process.env.NEXT_PUBLIC_FOOTBALL_API_TOKEN || '';
 const BASE_URL = 'https://api.football-data.org/v4';
 
 import { getWithBuildCache } from './build-cache';
@@ -20,12 +20,10 @@ async function fetchWithRetry(url: string, options: any, retries = 10) {
         await sleep(5000);
         continue;
       }
-      await sleep(10000); // 10s between requests
       return res.json();
     } catch (e) {
-      console.error(`Fetch exception for ${url}:`, e);
       if (i === retries - 1) throw e;
-      await sleep(5000);
+      await sleep(2000);
     }
   }
   throw new Error(`Failed to fetch after ${retries} retries`);
@@ -39,12 +37,9 @@ export const LEAGUE_MAP: Record<string, string> = {
   'FL1': 'リーグ・アン',
   'CL': 'チャンピオンズリーグ',
   'EL': 'ヨーロッパリーグ',
-  'DED': 'エールディヴィジ',
-  'PPL': 'プリメイラ・リーガ',
-  'WC': 'ワールドカップ',
 };
 
-export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL'];
+export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'PPL', 'DED', 'CL'];
 
 export const getBroadcastChannels = (leagueName: string): string[] => {
   const map: Record<string, string[]> = {
@@ -53,6 +48,8 @@ export const getBroadcastChannels = (leagueName: string): string[] => {
     'ブンデスリーガ': ['スカパー！', 'ABEMA'],
     'セリエA': ['DAZN', 'SPOTV NOW'],
     'リーグ・アン': ['DAZN'],
+    'プリメイラ・リーガ': ['DAZN'],
+    'エールディヴィジ': ['Hulu', 'MEXT'],
     'ワールドカップ': ['ABEMA', 'NHK', 'テレビ朝日'],
   };
   return map[leagueName] || ['DAZN'];
@@ -62,23 +59,18 @@ export const JAPANESE_PLAYERS = [
   { name: 'Kaoru Mitoma', jpName: '三笘 薫', team: 'Brighton & Hove Albion FC', role: 'FW' },
   { name: 'Takefusa Kubo', jpName: '久保 建英', team: 'Real Sociedad de Fútbol', role: 'FW' },
   { name: 'Wataru Endo', jpName: '遠藤 航', team: 'Liverpool FC', role: 'MF' },
-  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'Feyenoord Rotterdam', role: 'DF' },
-  { name: 'Ko Itakura', jpName: '板倉 滉', team: 'Feyenoord Rotterdam', role: 'DF' },
+  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'Arsenal FC', role: 'DF' },
+  { name: 'Ko Itakura', jpName: '板倉 滉', team: 'Borussia Mönchengladbach', role: 'DF' },
   { name: 'Ayase Ueda', jpName: '上田 綺世', team: 'Feyenoord Rotterdam', role: 'FW' },
   { name: 'Hiroki Ito', jpName: '伊藤 洋輝', team: 'FC Bayern München', role: 'DF' },
+  { name: 'Ritsu Doan', jpName: '堂安 律', team: 'SC Freiburg', role: 'MF' },
   { name: 'Takumi Minamino', jpName: '南野 拓実', team: 'AS Monaco FC', role: 'MF' },
   { name: 'Daichi Kamada', jpName: '鎌田 大地', team: 'Crystal Palace FC', role: 'MF' },
-  { name: 'Ritsu Doan', jpName: '堂安 律', team: 'SC Freiburg', role: 'MF' },
-  { name: 'Zion Suzuki', jpName: '鈴木 彩艶', team: 'Parma Calcio 1913', role: 'GK' },
-  { name: 'Takuma Asano', jpName: '浅野 拓磨', team: 'RCD Mallorca', role: 'FW' },
-  { name: 'Kaishu Sano', jpName: '佐野 海舟', team: '1. FSV Mainz 05', role: 'MF' },
-  { name: 'Yukinari Sugawara', jpName: '菅原 由勢', team: 'Southampton FC', role: 'DF' },
-  { name: 'Junya Ito', jpName: '伊東 純也', team: 'KRC Genk', role: 'FW' },
-  { name: 'Keito Nakamura', jpName: '中村 敬斗', team: 'Stade de Reims', role: 'FW' },
-  { name: 'Shuto Machino', jpName: '町野 修斗', team: 'Holstein Kiel', role: 'FW' },
-  { name: 'Ado Onaiwu', jpName: 'オナイウ 阿道', team: 'AJ Auxerre', role: 'FW' },
-  { name: 'Koji Miyoshi', jpName: '三好 康児', team: 'VfL Bochum 1848', role: 'MF' },
-  { name: 'Anrie Chase', jpName: 'チェイス アンリ', team: 'VfB Stuttgart', role: 'DF' },
+  { name: 'Reo Hatate', jpName: '旗手 怜央', team: 'Celtic FC', role: 'MF' },
+  { name: 'Kyogo Furuhashi', jpName: '古橋 亨梧', team: 'Celtic FC', role: 'FW' },
+  { name: 'Daizen Maeda', jpName: '前田 大然', team: 'Celtic FC', role: 'FW' },
+  { name: 'Hidemasa Morita', jpName: '守田 英正', team: 'Sporting CP', role: 'MF' },
+  { name: 'Koki Machida', jpName: '町田 浩樹', team: 'Royale Union Saint-Gilloise', role: 'DF' },
 ];
 
 export const JAPANESE_PLAYERS_TEAMS = JAPANESE_PLAYERS.map(p => p.team);
@@ -104,26 +96,23 @@ const TEAM_NAME_MAP: Record<string, string> = {
   'Luton Town FC': 'ルートン・タウン',
   'Burnley FC': 'バーンリー',
   'Sheffield United FC': 'シェフィールド・ユナイテッド',
-  'Leicester City FC': 'レスター',
-  'Ipswich Town FC': 'イプスウィッチ',
-  'Southampton FC': 'サウサンプトン',
   'Real Madrid CF': 'レアル・マドリード',
   'FC Barcelona': 'バルセロナ',
   'Girona FC': 'ジローナ',
   'Club Atlético de Madrid': 'アトレティコ・マドリード',
   'Athletic Club': 'アスレティック・ビルバオ',
   'Real Sociedad de Fútbol': 'レアル・ソシエダ',
-  'Real Betis Balompié': 'レアル・ベティス',
-  'Villarreal CF': 'ビジャレアル',
+  'Real Betis Balompié': 'ベティス',
   'Valencia CF': 'バレンシア',
-  'Deportivo Alavés': 'アラベス',
-  'CA Osasuna': 'オサスナ',
+  'Villarreal CF': 'ビジャレアル',
   'Getafe CF': 'ヘタフェ',
-  'RC Celta de Vigo': 'セルタ',
+  'CA Osasuna': 'オサスナ',
+  'UD Las Palmas': 'ラス・パルマス',
+  'Deportivo Alavés': 'アラベス',
   'Sevilla FC': 'セビージャ',
   'RCD Mallorca': 'マジョルカ',
-  'UD Las Palmas': 'ラス・パルマス',
-  'Rayo Vallecano de Madrid': 'ラヨ・バジェカーノ',
+  'Rayo Vallecano de Madrid': 'ラージョ・バジェカーノ',
+  'Celta de Vigo': 'セルタ',
   'Cádiz CF': 'カディス',
   'Granada CF': 'グラナダ',
   'UD Almería': 'アルメリア',
@@ -135,33 +124,32 @@ const TEAM_NAME_MAP: Record<string, string> = {
   'Eintracht Frankfurt': 'フランクフルト',
   'TSG 1899 Hoffenheim': 'ホッフェンハイム',
   'SC Freiburg': 'フライブルク',
-  '1. FC Heidenheim 1846': 'ハイデンハイム',
-  'SV Werder Bremen': 'ブレーメン',
   'FC Augsburg': 'アウクスブルク',
+  'SV Werder Bremen': 'ブレーメン',
+  '1. FC Heidenheim 1846': 'ハイデンハイム',
+  'VfL Borussia Mönchengladbach': 'メンヒェングラートバッハ',
   'VfL Wolfsburg': 'ヴォルフスブルク',
-  '1. FSV Mainz 05': 'マインツ',
-  'Borussia Mönchengladbach': 'メンヒェングラートバッハ',
   '1. FC Union Berlin': 'ウニオン・ベルリン',
   'VfL Bochum 1848': 'ボーフム',
+  '1. FSV Mainz 05': 'マインツ',
   '1. FC Köln': 'ケルン',
   'SV Darmstadt 98': 'ダルムシュタット',
   'FC Internazionale Milano': 'インテル',
   'AC Milan': 'ミラン',
   'Juventus FC': 'ユヴェントス',
-  'Atalanta BC': 'アタランタ',
   'Bologna FC 1909': 'ボローニャ',
   'AS Roma': 'ローマ',
+  'Atalanta BC': 'アタランタ',
   'SS Lazio': 'ラツィオ',
+  'SSC Napoli': 'ナポリ',
   'ACF Fiorentina': 'フィオレンティーナ',
   'Torino FC': 'トリノ',
-  'SSC Napoli': 'ナポリ',
-  'Genoa CFC': 'ジェノア',
   'AC Monza': 'モンツァ',
-  'Hellas Verona FC': 'ヴェローナ',
+  'Genoa CFC': 'ジェノア',
   'US Lecce': 'レッチェ',
+  'Hellas Verona FC': 'ヴェローナ',
   'Udinese Calcio': 'ウディネーゼ',
   'Cagliari Calcio': 'カリアリ',
-  'Empoli FC': 'エンポリ',
   'Frosinone Calcio': 'フロジノーネ',
   'US Sassuolo Calcio': 'サッスオーロ',
   'US Salernitana 1919': 'サレルニターナ',
@@ -181,6 +169,13 @@ const TEAM_NAME_MAP: Record<string, string> = {
   'AJ Auxerre': 'オセール',
   'Holstein Kiel': 'ホルシュタイン・キール',
   'Parma Calcio 1913': 'パルマ',
+  'SL Benfica': 'ベンフィカ',
+  'FC Porto': 'ポルト',
+  'Sporting CP': 'スポルティング',
+  'AFC Ajax': 'アヤックス',
+  'PSV': 'PSV',
+  'Feyenoord Rotterdam': 'フェイエノールト',
+  'Royale Union Saint-Gilloise': 'サン=トワイヤン',
 };
 
 export const MAJOR_TEAMS = [
@@ -190,20 +185,28 @@ export const MAJOR_TEAMS = [
   { id: '66', name: 'Manchester United FC', jpName: 'マンチェスター・ユナイテッド' },
   { id: '73', name: 'Tottenham Hotspur FC', jpName: 'トッテナム' },
   { id: '1044', name: 'Brighton & Hove Albion FC', jpName: 'ブライトン' },
+  { id: '62', name: 'Everton FC', jpName: 'エヴァートン' },
   { id: '86', name: 'Real Madrid CF', jpName: 'レアル・マドリード' },
   { id: '81', name: 'FC Barcelona', jpName: 'バルセロナ' },
   { id: '78', name: 'Club Atlético de Madrid', jpName: 'アトレティコ・マドリード' },
   { id: '354', name: 'Real Sociedad de Fútbol', jpName: 'レアル・ソシエダ' },
+  { id: '89', name: 'RCD Mallorca', jpName: 'マジョルカ' },
   { id: '5', name: 'FC Bayern München', jpName: 'バイエルン' },
   { id: '4', name: 'Borussia Dortmund', jpName: 'ドルトムント' },
   { id: '3', name: 'Bayer 04 Leverkusen', jpName: 'レヴァークーゼン' },
   { id: '108', name: 'FC Internazionale Milano', jpName: 'インテル' },
   { id: '98', name: 'AC Milan', jpName: 'ミラン' },
   { id: '109', name: 'Juventus FC', jpName: 'ユヴェントス' },
+  { id: '112', name: 'Parma Calcio 1913', jpName: 'パルマ' },
   { id: '524', name: 'Paris Saint-Germain FC', jpName: 'パリ・サンジェルマン' },
   { id: '548', name: 'AS Monaco FC', jpName: 'モナコ' },
+  { id: '1903', name: 'SL Benfica', jpName: 'ベンフィカ' },
+  { id: '503', name: 'FC Porto', jpName: 'ポルト' },
+  { id: '498', name: 'Sporting CP', jpName: 'スポルティング' },
+  { id: '678', name: 'AFC Ajax', jpName: 'アヤックス' },
+  { id: '674', name: 'PSV', jpName: 'PSV' },
+  { id: '675', name: 'Feyenoord Rotterdam', jpName: 'フェイエノールト' },
 ];
-
 
 export function getJapanesePlayersInTeam(teamName: string): string[] {
   return JAPANESE_PLAYERS.filter(p => p.team === teamName).map(p => p.jpName);
@@ -253,7 +256,6 @@ export async function fetchTeamData(teamId: string) {
 }
 
 export async function fetchTeamMatches(teamId: string, status: string = 'SCHEDULED') {
-  const { getWithBuildCache } = require('./build-cache');
   return getWithBuildCache(`team_matches_${teamId}_${status}`, () =>
     fetchWithRetry(`${BASE_URL}/teams/${teamId}/matches?status=${status}`, {
       headers: { 'X-Auth-Token': API_TOKEN },
@@ -261,4 +263,3 @@ export async function fetchTeamMatches(teamId: string, status: string = 'SCHEDUL
     })
   );
 }
-

@@ -2,7 +2,6 @@
 
 import { JAPANESE_PLAYERS, translateTeamName } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Star, ChevronLeft, MapPin, ExternalLink, Search, Filter, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -80,7 +79,6 @@ export default function JapanesePlayersPage() {
           </div>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           <AnimatePresence mode="popLayout">
@@ -168,7 +166,6 @@ export default function JapanesePlayersPage() {
           )}
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

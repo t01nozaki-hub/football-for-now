@@ -1,5 +1,4 @@
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { Tv, ExternalLink, ChevronLeft, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -49,7 +48,6 @@ export default function GuidePage() {
           <p className="text-white/40 font-bold uppercase tracking-widest text-sm">2025-26 欧州サッカー視聴方法まとめ</p>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
           {BROADCAST_SERVICES.map((service) => (
@@ -131,7 +129,6 @@ export default function GuidePage() {
           </div>
         </section>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />

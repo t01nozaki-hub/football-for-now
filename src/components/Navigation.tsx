@@ -158,9 +158,17 @@ export const Footer = () => {
         </div>
         
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
-            © 2024 football for now. ALL RIGHTS RESERVED.
-          </p>
+          <div className="flex flex-col items-center md:items-start gap-1">
+            <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
+              © 2024 football for now. ALL RIGHTS RESERVED.
+            </p>
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-neon-lime rounded-full animate-pulse" />
+              <p className="text-[9px] font-black text-neon-lime/60 uppercase tracking-widest">
+                System Active • Last Sync: {new Date().toLocaleDateString('ja-JP')} {new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
+          </div>
           <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest text-center md:text-right">
             DATA PROVIDED BY FOOTBALL-DATA.ORG.
           </p>

@@ -1,6 +1,5 @@
 import { fetchStandings, fetchScorers, fetchMatches, LEAGUE_MAP, translateTeamName, LEAGUES } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
-import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { MatchCard } from '@/components/MatchCard';
 import { Trophy, Target, Calendar, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -70,7 +69,6 @@ export default async function LeaguePage({ params }: { params: Promise<{ code: s
           <p className="text-white/40 font-bold uppercase tracking-widest text-sm relative z-10">2025-26 Season Standings</p>
         </div>
 
-        <AdPlaceholder position="header-bottom" />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-20">
           {/* Main Table */}
@@ -154,11 +152,9 @@ export default async function LeaguePage({ params }: { params: Promise<{ code: s
               </div>
             </div>
             
-            <AdPlaceholder position="content-middle" />
           </div>
         </div>
 
-        <AdPlaceholder position="footer-top" />
       </main>
 
       <Footer />
