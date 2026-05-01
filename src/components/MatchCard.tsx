@@ -5,6 +5,7 @@ import { translateTeamName, getBroadcastChannels, getJapanesePlayersInTeam } fro
 import { Star, Tv, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ReactionButtons } from './ReactionButtons';
+import { getAmazonSearchUrl } from '@/lib/affiliate-config';
 
 interface Match {
   id: number;
@@ -148,10 +149,15 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, leagueName }) => {
           ))}
         </div>
         
-        <button className="w-full bg-neon-lime text-black py-2.5 rounded-lg text-xs font-black flex items-center justify-center gap-2 hover:opacity-90 transition-opacity group/btn">
+        <a 
+          href={getAmazonSearchUrl(`${leagueName || 'サッカー'} 視聴 グッズ`)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full bg-neon-lime text-black py-2.5 rounded-lg text-xs font-black flex items-center justify-center gap-2 hover:opacity-90 transition-opacity group/btn"
+        >
           今すぐ視聴プランをチェック
           <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-        </button>
+        </a>
       </div>
     </motion.div>
   );

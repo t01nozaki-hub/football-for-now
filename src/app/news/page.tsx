@@ -3,6 +3,7 @@ import { Newspaper, Clock, TrendingUp, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
 import { NEWS_ARTICLES } from '@/lib/news-data';
+import { GearsAndApparel } from '@/components/AffiliateBanners';
 
 export default function NewsPage() {
   return (
@@ -73,6 +74,8 @@ export default function NewsPage() {
                 ))}
               </div>
             </div>
+
+            <GearsAndApparel />
 
           </div>
         </div>

@@ -5,6 +5,7 @@ import { Header, Footer } from '@/components/Navigation';
 import { ClientMatchList } from '@/components/ClientMatchList';
 import { TournamentBracket } from '@/components/TournamentBracket';
 import { ArrowUpRight } from 'lucide-react';
+import { GearsAndApparel } from '@/components/AffiliateBanners';
 
 import Link from 'next/link';
 
@@ -170,6 +171,8 @@ export default async function Home() {
                 })}
               </div>
             </section>
+
+            <GearsAndApparel />
           </div>
         </div>
 
