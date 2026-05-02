@@ -37,10 +37,15 @@ export const CompactMatchRow: React.FC<CompactMatchRowProps> = ({ match, leagueN
       whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
       className={`group flex items-center gap-4 py-4 px-6 border-b border-white/5 last:border-0 transition-colors ${isJP ? 'bg-neon-lime/[0.03]' : ''}`}
     >
-      {/* Time/Status */}
-      <div className="w-16 flex flex-col items-center">
+      {/* Time/Status/League */}
+      <div className="w-24 flex flex-col items-center gap-1 border-r border-white/5 pr-4 mr-2">
         <span className="text-[11px] font-black text-white/80">{time}</span>
-        <span className={`text-[8px] font-black uppercase tracking-widest ${isFinished ? 'text-white/20' : 'text-neon-lime animate-pulse'}`}>
+        {leagueName && (
+          <span className="text-[8px] font-black text-neon-lime/60 uppercase tracking-[0.1em] text-center line-clamp-1 max-w-full">
+            {leagueName}
+          </span>
+        )}
+        <span className={`text-[7px] font-black uppercase tracking-[0.2em] px-1.5 py-0.5 rounded ${isFinished ? 'bg-white/5 text-white/20' : 'bg-neon-lime text-black animate-pulse'}`}>
           {isFinished ? 'FIN' : 'LIVE'}
         </span>
       </div>

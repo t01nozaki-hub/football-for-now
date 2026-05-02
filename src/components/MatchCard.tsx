@@ -43,30 +43,32 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, leagueName }) => {
       whileHover={{ y: -5 }}
       className={`glass rounded-2xl p-6 transition-all group relative overflow-hidden ${isJPRelevant ? 'border-neon-lime/30 shadow-[0_0_20px_rgba(204,255,0,0.05)]' : 'hover:neon-border'}`}
     >
-      {/* Date & League & Matchday */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <div className={`w-1 h-3 rounded-full ${isFinished ? 'bg-white/20' : isJPRelevant ? 'bg-neon-lime animate-pulse' : 'bg-white/20'}`} />
-            <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
-              {isFinished ? 'FINISHED' : 'UPCOMING'}
-            </span>
+      {/* League & Date Info */}
+      <div className="flex flex-col gap-4 mb-8">
+        {leagueName && (
+          <div className="w-fit px-2 py-0.5 bg-white/10 border border-white/5 rounded text-[9px] font-black text-neon-lime uppercase tracking-widest">
+            {leagueName}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-black text-white">{formattedDate}</span>
-            {!isFinished && <span className="text-xs font-bold text-white/40">{jstTime}</span>}
-            <span className="text-[10px] font-bold text-neon-lime bg-neon-lime/10 px-1.5 py-0.5 rounded">
-              {match.stage && match.stage !== 'REGULAR_SEASON' 
-                ? match.stage.replace(/_/g, ' ') 
-                : match.matchday ? `第${match.matchday}節` : ''}
-            </span>
+        )}
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <div className={`w-1 h-3 rounded-full ${isFinished ? 'bg-white/20' : isJPRelevant ? 'bg-neon-lime animate-pulse' : 'bg-white/20'}`} />
+              <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">
+                {isFinished ? 'FINISHED' : 'UPCOMING'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-black text-white">{formattedDate}</span>
+              {!isFinished && <span className="text-xs font-bold text-white/40">{jstTime}</span>}
+              <span className="text-[10px] font-bold text-neon-lime bg-neon-lime/10 px-1.5 py-0.5 rounded">
+                {match.stage && match.stage !== 'REGULAR_SEASON' 
+                  ? match.stage.replace(/_/g, ' ') 
+                  : match.matchday ? `第${match.matchday}節` : ''}
+              </span>
+            </div>
           </div>
         </div>
-        {leagueName && (
-          <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded text-white/40 font-mono tracking-wider">
-            {leagueName}
-          </span>
-        )}
       </div>
 
       {/* Teams & Score */}
