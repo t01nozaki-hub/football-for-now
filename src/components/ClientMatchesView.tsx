@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { CompactMatchRow } from './CompactMatchRow';
 import { MatchCard } from './MatchCard';
 import { JAPANESE_PLAYERS_TEAMS } from '@/lib/football-data';
-import { Filter, Calendar, Trophy, Zap } from 'lucide-react';
+import { Filter, Calendar, Trophy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ClientMatchesViewProps {
@@ -15,7 +15,7 @@ interface ClientMatchesViewProps {
 export const ClientMatchesView: React.FC<ClientMatchesViewProps> = ({ initialMatches, leagues }) => {
   const [activeTab, setActiveTab] = useState<'finished' | 'upcoming'>('finished');
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'list'>('list');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
 
   const filteredMatches = useMemo(() => {
     let filtered = initialMatches.filter(match => {
