@@ -13,17 +13,27 @@ interface ClientMatchesViewProps {
 }
 
 export const ClientMatchesView: React.FC<ClientMatchesViewProps> = ({ initialMatches, leagues }) => {
-  const [activeTab, setActiveTab] = useState<'all' | 'finished' | 'upcoming'>('all');
+  const [activeTab, setActiveTab] = useState<'finished' | 'upcoming'>('finished');
   const [selectedLeague, setSelectedLeague] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [viewMode, setViewMode] = useState<'list'>('list');
 
   const filteredMatches = useMemo(() => {
-    return initialMatches.filter(match => {
-      const statusMatch = activeTab === 'all' || 
-                         (activeTab === 'finished' && match.status === 'FINISHED') ||
+    let filtered = initialMatches.filter(match => {
+      const statusMatch = (activeTab === 'finished' && match.status === 'FINISHED') ||
                          (activeTab === 'upcoming' && match.status !== 'FINISHED');
       const leagueMatch = selectedLeague === 'all' || match.leagueName === selectedLeague;
       return statusMatch && leagueMatch;
+    });
+
+    // Sort based on tab: Results (newest first), Schedule (nearest first)
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.utcDate).getTime();
+      const dateB = new Date(b.utcDate).getTime();
+      if (activeTab === 'finished') {
+        return dateB - dateA; // Newest first
+      } else {
+        return dateA - dateB; // Nearest first
+      }
     });
   }, [initialMatches, activeTab, selectedLeague]);
 
@@ -45,20 +55,19 @@ export const ClientMatchesView: React.FC<ClientMatchesViewProps> = ({ initialMat
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white/5 border border-white/10 rounded-[32px] p-6 lg:p-8">
         <div className="flex flex-wrap items-center gap-2">
           {[
-            { id: 'all', label: 'All Matches', icon: Zap },
             { id: 'finished', label: 'Results', icon: Trophy },
             { id: 'upcoming', label: 'Schedule', icon: Calendar },
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all ${
+              className={`flex items-center gap-2 px-8 py-4 rounded-full text-[11px] font-black uppercase tracking-widest transition-all ${
                 activeTab === tab.id 
                   ? 'bg-neon-lime text-black neon-glow' 
                   : 'bg-white/5 text-white/40 hover:bg-white/10'
               }`}
             >
-              <tab.icon className="w-3.5 h-3.5" />
+              <tab.icon className="w-4 h-4" />
               {tab.label}
             </button>
           ))}
