@@ -59,7 +59,7 @@ export const JAPANESE_PLAYERS = [
   { name: 'Kaoru Mitoma', jpName: '三笘 薫', team: 'Brighton & Hove Albion FC', role: 'FW' },
   { name: 'Takefusa Kubo', jpName: '久保 建英', team: 'Real Sociedad de Fútbol', role: 'FW' },
   { name: 'Wataru Endo', jpName: '遠藤 航', team: 'Liverpool FC', role: 'MF' },
-  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'Arsenal FC', role: 'DF' },
+  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'AFC Ajax', role: 'DF' },
   { name: 'Ko Itakura', jpName: '板倉 滉', team: 'Borussia Mönchengladbach', role: 'DF' },
   { name: 'Ayase Ueda', jpName: '上田 綺世', team: 'Feyenoord Rotterdam', role: 'FW' },
   { name: 'Hiroki Ito', jpName: '伊藤 洋輝', team: 'FC Bayern München', role: 'DF' },
