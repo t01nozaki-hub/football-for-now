@@ -36,11 +36,10 @@ export const LEAGUE_MAP: Record<string, string> = {
   'SA': 'セリエA',
   'FL1': 'リーグ・アン',
   'CL': 'チャンピオンズリーグ',
-  'EL': 'ヨーロッパリーグ',
-  'EC': 'カンファレンスリーグ',
+  'EC': 'ヨーロッパ選手権',
 };
 
-export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'PPL', 'DED', 'CL', 'EL', 'EC'];
+export const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'PPL', 'DED', 'CL', 'EC'];
 
 export const getBroadcastChannels = (leagueName: string): string[] => {
   const map: Record<string, string[]> = {

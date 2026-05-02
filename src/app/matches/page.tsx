@@ -22,7 +22,7 @@ export default async function MatchesPage() {
 
   const allMatches = matchesData
     .flatMap(ld => ld.matches.map((m: any) => ({ ...m, leagueName: ld.name })))
-    .sort((a: any, b: any) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime());
+    .sort((a: any, b: any) => new Date(b.utcDate).getTime() - new Date(a.utcDate).getTime());
 
   const leaguesList = LEAGUES.map(code => ({ code, name: LEAGUE_MAP[code] }));
 
