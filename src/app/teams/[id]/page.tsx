@@ -1,9 +1,29 @@
+import { Metadata } from 'next';
 import { Header, Footer } from '@/components/Navigation';
 import { fetchTeamData, fetchTeamMatches, translateTeamName, getJapanesePlayersInTeam, MAJOR_TEAMS } from '@/lib/football-data';
 import { MatchCard } from '@/components/MatchCard';
 import { Shield, Users, Calendar, Trophy, ChevronLeft, Star, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { AnimatedSection, AnimatedHover } from '@/components/AnimatedSection';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  let teamName = "チーム";
+  try {
+    const team = await fetchTeamData(id);
+    teamName = translateTeamName(team.name);
+  } catch (e) {
+    console.error(e);
+  }
+  
+  return {
+    title: `${teamName} チーム詳細・日程・選手一覧 | football for now`,
+    description: `${teamName}の最新試合結果、今後の日程、所属選手一覧をチェック。日本人選手の所属情報も一目でわかります。`,
+    alternates: {
+      canonical: `/teams/${id}/`,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return MAJOR_TEAMS.map((team) => ({
@@ -33,7 +53,7 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-black italic mb-4">TEAM NOT FOUND</h2>
-            <Link href="/teams" className="text-neon-lime font-bold uppercase tracking-widest text-xs hover:underline">
+            <Link href="/teams/" className="text-neon-lime font-bold uppercase tracking-widest text-xs hover:underline">
               Back to Directory
             </Link>
           </div>
@@ -57,7 +77,7 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Link href="/teams" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group w-fit">
+          <Link href="/teams/" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group w-fit">
             <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span className="text-sm font-bold uppercase tracking-widest">Club Directory</span>
           </Link>

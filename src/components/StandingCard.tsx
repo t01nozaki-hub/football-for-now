@@ -48,7 +48,7 @@ export const StandingCard: React.FC<StandingCardProps> = ({ leagueName, leagueCo
                     {team.position}
                   </span>
                   <img src={team.team.crest} alt={team.team.name} className="w-6 h-6 object-contain" />
-                  <Link href={`/teams/${team.team.id}`} className="text-sm font-medium group-hover/row:text-neon-lime transition-colors hover:underline decoration-neon-lime underline-offset-4">
+                  <Link href={`/teams/${team.team.id}/`} className="text-sm font-medium group-hover/row:text-neon-lime transition-colors hover:underline decoration-neon-lime underline-offset-4">
                     {translateTeamName(team.team.name)}
                   </Link>
 
@@ -76,7 +76,7 @@ export const StandingCard: React.FC<StandingCardProps> = ({ leagueName, leagueCo
       
       <div className="mt-4 pt-4 border-t border-white/5 flex justify-end">
         <Link 
-          href={`/leagues/${leagueCode}`} 
+          href={`/leagues/${leagueCode}/`} 
           className="text-[10px] text-white/40 hover:text-neon-lime transition-colors uppercase tracking-widest font-bold flex items-center gap-2"
         >
           View Full Table →

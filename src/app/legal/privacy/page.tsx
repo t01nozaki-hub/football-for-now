@@ -1,6 +1,15 @@
+import { Metadata } from 'next';
 import { Header, Footer } from '@/components/Navigation';
 import { ChevronLeft, Shield, Lock, Eye } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'プライバシーポリシー | football for now',
+  description: 'football for nowの個人情報保護方針。Cookieの利用や広告配信、アクセス解析ツールについての詳細。',
+  alternates: {
+    canonical: '/legal/privacy/',
+  },
+};
 
 export default function PrivacyPage() {
   return (

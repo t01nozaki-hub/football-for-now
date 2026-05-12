@@ -1,8 +1,22 @@
+import { Metadata } from 'next';
 import { fetchStandings, fetchScorers, fetchMatches, LEAGUE_MAP, translateTeamName, LEAGUES } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { MatchCard } from '@/components/MatchCard';
 import { Trophy, Target, Calendar, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+
+export async function generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata> {
+  const { code } = await params;
+  const leagueName = LEAGUE_MAP[code] || code;
+  
+  return {
+    title: `${leagueName} 順位表・日程 | football for now`,
+    description: `${leagueName}の最新順位表、試合結果、今後の日程、得点王ランキングをチェック。日本人選手の活躍も網羅。`,
+    alternates: {
+      canonical: `/leagues/${code}/`,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   return LEAGUES.map((code) => ({ code }));
@@ -93,7 +107,7 @@ export default async function LeaguePage({ params }: { params: Promise<{ code: s
                       <tr key={row.team.id} className="hover:bg-white/5 transition-colors group">
                         <td className="px-6 py-4 font-mono font-bold text-white/20 group-hover:text-neon-lime">{row.position}</td>
                         <td className="px-6 py-4">
-                          <Link href={`/teams/${row.team.id}`} className="flex items-center gap-4 hover:text-neon-lime transition-colors">
+                          <Link href={`/teams/${row.team.id}/`} className="flex items-center gap-4 hover:text-neon-lime transition-colors">
                             <img src={row.team.crest} alt="" className="w-6 h-6 object-contain" />
                             <span className="text-sm font-bold truncate max-w-[120px] md:max-w-none">
                               {translateTeamName(row.team.name)}

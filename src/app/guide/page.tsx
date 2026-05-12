@@ -1,6 +1,15 @@
+import { Metadata } from 'next';
 import { Header, Footer } from '@/components/Navigation';
 import { Tv, ExternalLink, ChevronLeft, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '欧州サッカー視聴ガイド 2025-26 | football for now',
+  description: 'プレミアリーグ、ラ・リーガ、CL等の視聴方法を徹底解説。U-NEXT、DAZN、WOWOW、ABEMAの料金や特徴を比較。',
+  alternates: {
+    canonical: '/guide/',
+  },
+};
 
 const BROADCAST_SERVICES = [
   {

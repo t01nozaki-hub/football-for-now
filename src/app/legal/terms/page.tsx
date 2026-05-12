@@ -1,6 +1,15 @@
+import { Metadata } from 'next';
 import { Header, Footer } from '@/components/Navigation';
 import { ChevronLeft, Gavel, AlertTriangle, Scale } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '利用規約 | football for now',
+  description: 'football for nowのご利用にあたっての諸条件。禁止事項や免責事項についての詳細。',
+  alternates: {
+    canonical: '/legal/terms/',
+  },
+};
 
 export default function TermsPage() {
   return (

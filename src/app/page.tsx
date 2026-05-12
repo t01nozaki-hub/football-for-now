@@ -1,4 +1,13 @@
+import { Metadata } from 'next';
 import { fetchStandings, fetchMatches, LEAGUE_MAP, JAPANESE_PLAYERS, LEAGUES } from '@/lib/football-data';
+
+export const metadata: Metadata = {
+  title: "football for now | 欧州サッカーを最速で把握",
+  description: "プレミアリーグ、ラ・リーガ、ブンデスリーガなど欧州主要リーグの順位表と試合スケジュールを最速でチェック。日本人選手の活躍も一目でわかります。",
+  alternates: {
+    canonical: 'https://footballfornow.com/',
+  },
+};
 import { StandingCard } from '@/components/StandingCard';
 import { MatchCard } from '@/components/MatchCard';
 import { Header, Footer } from '@/components/Navigation';
@@ -79,7 +88,7 @@ export default async function Home() {
         {/* League Quick View Grid - Differentiation through Clarity */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-16">
           {standingsData.filter(d => d !== null).map((league: any) => (
-            <Link key={league.code} href={`/leagues/${league.code}`} className="glass rounded-[32px] p-6 border border-white/5 hover:neon-border transition-all group relative">
+            <Link key={league.code} href={`/leagues/${league.code}/`} className="glass rounded-[32px] p-6 border border-white/5 hover:neon-border transition-all group relative">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-sm">
@@ -121,7 +130,7 @@ export default async function Home() {
                   <div className="w-1.5 h-6 bg-neon-lime shadow-[0_0_15px_rgba(204,255,0,0.5)]" />
                   <h2 className="text-2xl font-black italic tracking-tight uppercase">Recent <span className="text-neon-lime">Results</span></h2>
                 </div>
-                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">View All →</Link>
+                <Link href="/matches/" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">View All →</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {matches.filter((m: any) => m.status === 'FINISHED').slice(0, 4).map((match: any) => (
@@ -136,7 +145,7 @@ export default async function Home() {
                   <div className="w-1.5 h-6 bg-neon-lime shadow-[0_0_15px_rgba(204,255,0,0.5)]" />
                   <h2 className="text-2xl font-black italic tracking-tight uppercase">Upcoming <span className="text-neon-lime">Fixtures</span></h2>
                 </div>
-                <Link href="/matches" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">Full Schedule →</Link>
+                <Link href="/matches/" className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">Full Schedule →</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {matches.filter((m: any) => m.status === 'SCHEDULED').slice(0, 4).map((match: any) => (
@@ -153,7 +162,7 @@ export default async function Home() {
             <section className="glass rounded-[32px] p-6 border border-white/5">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-sm font-black italic tracking-tight uppercase">JP <span className="text-neon-lime">Warriors</span></h3>
-                <Link href="/japanese-players" className="text-[8px] font-black uppercase tracking-widest text-white/20 hover:text-neon-lime transition-colors">
+                <Link href="/japanese-players/" className="text-[8px] font-black uppercase tracking-widest text-white/20 hover:text-neon-lime transition-colors">
                   All →
                 </Link>
               </div>
@@ -161,7 +170,7 @@ export default async function Home() {
                 {JAPANESE_PLAYERS.slice(0, 6).map((player) => {
                    const slug = player.name.toLowerCase().replace(/\s+/g, '-');
                    return (
-                     <Link key={player.name} href={`/japanese-players/${slug}`} className="bg-white/5 rounded-xl p-3 flex flex-col items-center gap-2 group hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
+                     <Link key={player.name} href={`/japanese-players/${slug}/`} className="bg-white/5 rounded-xl p-3 flex flex-col items-center gap-2 group hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
                        <span className="text-[18px]">🇯🇵</span>
                        <span className="text-[9px] font-black text-center leading-tight group-hover:text-neon-lime">
                          {player.jpName}

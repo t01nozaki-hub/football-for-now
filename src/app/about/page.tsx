@@ -1,6 +1,15 @@
+import { Metadata } from 'next';
 import { Header, Footer } from '@/components/Navigation';
 import { ChevronLeft, Info, Mail, Globe } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '当サイトについて | football for now',
+  description: 'football for nowのコンセプトとビジョン。欧州サッカー情報を最速で届けるための取り組みについて。',
+  alternates: {
+    canonical: '/about/',
+  },
+};
 
 export default function AboutPage() {
   return (

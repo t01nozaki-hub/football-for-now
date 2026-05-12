@@ -51,7 +51,7 @@ function SearchResults() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTeams.map((team) => (
-              <Link key={team.id} href={`/teams/${team.id}`} className="glass rounded-3xl p-6 border border-white/5 hover:neon-border transition-all group flex items-center gap-6">
+              <Link key={team.id} href={`/teams/${team.id}/`} className="glass rounded-3xl p-6 border border-white/5 hover:neon-border transition-all group flex items-center gap-6">
                 <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
                   🛡️
                 </div>
@@ -75,7 +75,7 @@ function SearchResults() {
             {filteredPlayers.map((player) => {
               const slug = player.name.toLowerCase().replace(/\s+/g, '-');
               return (
-                <Link key={player.name} href={`/japanese-players/${slug}`} className="glass rounded-[32px] p-8 border border-white/5 hover:neon-border transition-all group relative overflow-hidden">
+                <Link key={player.name} href={`/japanese-players/${slug}/`} className="glass rounded-[32px] p-8 border border-white/5 hover:neon-border transition-all group relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-neon-lime/5 blur-[50px] -mr-16 -mt-16 group-hover:bg-neon-lime/10 transition-all" />
                   
                   <div className="flex items-center justify-between mb-8">
@@ -115,7 +115,7 @@ function SearchResults() {
           <p className="text-white/40 text-sm font-medium max-w-sm mb-12">
             一致する結果が見つかりませんでした。別のキーワード（選手名、クラブ名など）で再検索してください。
           </p>
-          <Link href="/japanese-players" className="bg-neon-lime text-black px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:neon-glow transition-all">
+          <Link href="/japanese-players/" className="bg-neon-lime text-black px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest hover:neon-glow transition-all">
             Browse All Players
           </Link>
         </div>

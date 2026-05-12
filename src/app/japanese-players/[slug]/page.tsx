@@ -3,10 +3,35 @@ import { JAPANESE_PLAYERS, translateTeamName } from '@/lib/football-data';
 import { ChevronLeft, Star, TrendingUp, Shield, Zap, Target } from 'lucide-react';
 import Link from 'next/link';
 
+import { Metadata } from 'next';
+
 export async function generateStaticParams() {
   return JAPANESE_PLAYERS.map((player) => ({
     slug: player.name.toLowerCase().replace(/\s+/g, '-'),
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const player = JAPANESE_PLAYERS.find(
+    p => p.name.toLowerCase().replace(/\s+/g, '-') === slug
+  );
+
+  if (!player) return {};
+
+  return {
+    title: `${player.jpName} (${player.name}) | 選手名鑑 | football for now`,
+    description: `${player.jpName}の最新スタッツ、所属チーム、プロフィール情報をチェック。欧州で活躍する日本人サッカー選手の詳細データ。`,
+    openGraph: {
+      title: `${player.jpName} | football for now`,
+      description: `${player.jpName}の最新パフォーマンスデータをチェック。`,
+      type: 'profile',
+      images: [{ url: `https://footballfornow.com/api/og/player?name=${encodeURIComponent(player.name)}` }],
+    },
+    alternates: {
+      canonical: `/japanese-players/${slug}/`,
+    },
+  };
 }
 
 export default async function PlayerDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -22,7 +47,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
       <Header />
       
       <main className="container mx-auto px-4 py-8">
-        <Link href="/japanese-players" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group">
+        <Link href="/japanese-players/" className="flex items-center gap-2 text-white/40 hover:text-neon-lime transition-colors mb-8 group">
           <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span className="text-sm font-bold uppercase tracking-widest">Back to Warriors</span>
         </Link>
@@ -124,12 +149,8 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ s
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="glass rounded-3xl p-6 border border-white/5 bg-gradient-to-br from-neon-lime/5 to-transparent">
-                 <h4 className="text-xs font-black uppercase tracking-widest mb-4">Latest News</h4>
-                 <p className="text-xs font-bold leading-relaxed">
-                   「{player.jpName}、次節の注目株に。指揮官もその成長を絶賛。」
-                 </p>
-                 <p className="text-[10px] text-white/20 mt-4">2024.11.21</p>
+              <div className="glass rounded-3xl p-6 border border-white/5 bg-gradient-to-br from-neon-lime/5 to-transparent flex items-center justify-center">
+                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Data Synchronization Active</p>
               </div>
               <div className="glass rounded-3xl p-6 border border-white/5">
                  <h4 className="text-xs font-black uppercase tracking-widest mb-4">Market Value</h4>

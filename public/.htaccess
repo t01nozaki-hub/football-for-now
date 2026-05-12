@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# HTTPS Enforce
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Trailing Slash Enforce (Redirect non-slash to slash)
+# Ignore files (contains .)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)\.(.*)$
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]
+
+# Handle old /news/ paths and redirect to home to fix GSC errors
+RewriteRule ^news/.*$ / [L,R=301]
+
+# Next.js Static Export Handling (Xserver / Apache)
+# Usually Next.js with trailingSlash: true generates folder/index.html
+# Apache's DirectoryIndex handles this if the folder exists.

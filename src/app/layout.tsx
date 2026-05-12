@@ -9,8 +9,25 @@ const notoLines = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://footballfornow.com'),
   title: "football for now | 欧州サッカーを最速で把握",
   description: "プレミアリーグ、ラ・リーガ、ブンデスリーガなど欧州主要リーグの順位表と試合スケジュールを最速でチェック。日本人選手の活躍も一目でわかります。",
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'football for now | 欧州サッカーを最速で把握',
+    description: '欧州主要リーグの最新順位、試合結果、日本人選手の活躍を最速でチェック。',
+    url: 'https://footballfornow.com',
+    siteName: 'football for now',
+    locale: 'ja_JP',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'football for now | 欧州サッカーを最速で把握',
+    description: '欧州主要リーグの最新順位、試合結果、日本人選手の活躍を最速でチェック。',
+  },
 };
 
 export default function RootLayout({

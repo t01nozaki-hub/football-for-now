@@ -29,12 +29,11 @@ export const Header = () => {
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-bold text-white/60">
             <Link href="/" className="hover:text-neon-lime transition-colors">DASHBOARD</Link>
-            <Link href="/news" className="hover:text-neon-lime transition-colors">NEWS</Link>
-            <Link href="/matches" className="hover:text-neon-lime transition-colors">MATCHES</Link>
-            <Link href="/stats" className="hover:text-neon-lime transition-colors">STATS</Link>
-            <Link href="/teams" className="hover:text-neon-lime transition-colors">TEAMS</Link>
-            <Link href="/japanese-players" className="hover:text-neon-lime transition-colors">JAPANESE</Link>
-            <Link href="/guide" className="hover:text-neon-lime transition-colors">GUIDE</Link>
+            <Link href="/matches/" className="hover:text-neon-lime transition-colors">MATCHES</Link>
+            <Link href="/stats/" className="hover:text-neon-lime transition-colors">STATS</Link>
+            <Link href="/teams/" className="hover:text-neon-lime transition-colors">TEAMS</Link>
+            <Link href="/japanese-players/" className="hover:text-neon-lime transition-colors">JAPANESE</Link>
+            <Link href="/guide/" className="hover:text-neon-lime transition-colors">GUIDE</Link>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" className="hover:text-neon-lime transition-colors">CONTACT</a>
 
 
@@ -84,12 +83,11 @@ export const Header = () => {
         <div className="md:hidden absolute top-16 left-0 w-full bg-black border-b border-white/10 p-6 space-y-6 animate-in slide-in-from-top duration-300">
           <nav className="flex flex-col gap-4 text-lg font-black italic tracking-tight">
             <Link href="/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">DASHBOARD</Link>
-            <Link href="/news" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">NEWS</Link>
-            <Link href="/matches" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">MATCHES</Link>
-            <Link href="/stats" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">STATS</Link>
-            <Link href="/teams" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">TEAMS</Link>
-            <Link href="/japanese-players" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">JAPANESE</Link>
-            <Link href="/guide" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">GUIDE</Link>
+            <Link href="/matches/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">MATCHES</Link>
+            <Link href="/stats/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">STATS</Link>
+            <Link href="/teams/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">TEAMS</Link>
+            <Link href="/japanese-players/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">JAPANESE</Link>
+            <Link href="/guide/" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">GUIDE</Link>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="hover:text-neon-lime transition-colors">CONTACT</a>
 
 
@@ -135,10 +133,10 @@ export const Footer = () => {
             <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-6">Quick Links</h3>
             <ul className="space-y-4 text-sm font-bold text-white/60">
               <li><Link href="/" className="hover:text-neon-lime transition-colors">DASHBOARD</Link></li>
-              <li><Link href="/teams" className="hover:text-neon-lime transition-colors">ALL TEAMS</Link></li>
-              <li><Link href="/japanese-players" className="hover:text-neon-lime transition-colors">JAPANESE WARRIORS</Link></li>
-              <li><Link href="/guide" className="hover:text-neon-lime transition-colors">WATCH GUIDE</Link></li>
-              <li><Link href="/matches" className="hover:text-neon-lime transition-colors">MATCH SCHEDULE</Link></li>
+              <li><Link href="/teams/" className="hover:text-neon-lime transition-colors">ALL TEAMS</Link></li>
+              <li><Link href="/japanese-players/" className="hover:text-neon-lime transition-colors">JAPANESE WARRIORS</Link></li>
+              <li><Link href="/guide/" className="hover:text-neon-lime transition-colors">WATCH GUIDE</Link></li>
+              <li><Link href="/matches/" className="hover:text-neon-lime transition-colors">MATCH SCHEDULE</Link></li>
 
             </ul>
           </div>
@@ -147,9 +145,9 @@ export const Footer = () => {
           <div>
             <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40 mb-6">Legal</h3>
             <ul className="space-y-4 text-sm font-bold text-white/60">
-              <li><Link href="/legal/privacy" className="hover:text-neon-lime transition-colors">PRIVACY POLICY</Link></li>
-              <li><Link href="/legal/terms" className="hover:text-neon-lime transition-colors">TERMS OF SERVICE</Link></li>
-              <li><Link href="/about" className="hover:text-neon-lime transition-colors">ABOUT US</Link></li>
+              <li><Link href="/legal/privacy/" className="hover:text-neon-lime transition-colors">PRIVACY POLICY</Link></li>
+              <li><Link href="/legal/terms/" className="hover:text-neon-lime transition-colors">TERMS OF SERVICE</Link></li>
+              <li><Link href="/about/" className="hover:text-neon-lime transition-colors">ABOUT US</Link></li>
               <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfq33u3bp1l85_CMgwbow2O81zWFOZQILfVBXSbxLiYP-_Urw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" className="hover:text-neon-lime transition-colors text-neon-lime">CONTACT (お問い合わせ)</a></li>
 
             </ul>

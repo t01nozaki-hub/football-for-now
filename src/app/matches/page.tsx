@@ -1,8 +1,17 @@
+import { Metadata } from 'next';
 import { fetchMatches, LEAGUE_MAP, LEAGUES } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { ClientMatchesView } from '@/components/ClientMatchesView';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '試合日程・結果一覧 | football for now',
+  description: '欧州主要リーグ（プレミア、ラ・リーガ、ブンデス、セリエA等）の最新試合結果と今後の日程をタイムライン形式でチェック。',
+  alternates: {
+    canonical: '/matches/',
+  },
+};
 
 export default async function MatchesPage() {
   const matchesData = await Promise.all(

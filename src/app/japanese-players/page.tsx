@@ -95,7 +95,7 @@ export default function JapanesePlayersPage() {
                   exit={{ opacity: 0, scale: 0.9 }}
                 >
                   <Link 
-                    href={`/japanese-players/${slug}`}
+                    href={`/japanese-players/${slug}/`}
                     className={`glass rounded-3xl p-6 relative overflow-hidden group hover:neon-border transition-all block h-full ${
                       isHighlight ? 'border-neon-lime/20 bg-neon-lime/5' : 'border-white/5'
                     }`}

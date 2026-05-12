@@ -9,15 +9,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 基本ページ
   const routes = [
     '',
-    '/news',
     '/matches',
     '/stats',
     '/teams',
     '/japanese-players',
+    '/leagues',
     '/guide',
     '/about',
   ].map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: `${baseUrl}${route}/`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: route === '' ? 1 : 0.8,
@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // リーグページ
   const leagueRoutes = LEAGUES.map((code) => ({
-    url: `${baseUrl}/leagues/${code}`,
+    url: `${baseUrl}/leagues/${code}/`,
     lastModified: new Date(),
     changeFrequency: 'hourly' as const,
     priority: 0.7,
@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // 主要チームページ
   const teamRoutes = MAJOR_TEAMS.map((team) => ({
-    url: `${baseUrl}/teams/${team.id}`,
+    url: `${baseUrl}/teams/${team.id}/`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.6,
@@ -41,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // 日本人選手ページ
   const playerRoutes = JAPANESE_PLAYERS.map((player) => ({
-    url: `${baseUrl}/japanese-players/${player.name.toLowerCase().replace(/\s+/g, '-')}`,
+    url: `${baseUrl}/japanese-players/${player.name.toLowerCase().replace(/\s+/g, '-')}/`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,

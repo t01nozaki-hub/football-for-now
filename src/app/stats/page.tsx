@@ -1,7 +1,16 @@
+import { Metadata } from 'next';
 import { fetchScorers, LEAGUE_MAP, translateTeamName } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { Target, Trophy, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: '得点ランキング・統計 | football for now',
+  description: '欧州主要リーグの得点ランキング、アシストランキングなどの統計情報をチェック。日本人選手の活躍もデータで確認。',
+  alternates: {
+    canonical: '/stats/',
+  },
+};
 
 const LEAGUES = ['PL', 'PD', 'BL1', 'SA', 'FL1'];
 
@@ -49,7 +58,7 @@ export default async function StatsPage() {
                   <Trophy className="w-5 h-5 text-neon-lime" />
                   <h2 className="text-xl font-black italic uppercase tracking-tight">{league.name}</h2>
                 </div>
-                <Link href={`/leagues/${league.code}`} className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">
+                <Link href={`/leagues/${league.code}/`} className="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-neon-lime transition-colors">
                   League Details →
                 </Link>
               </div>

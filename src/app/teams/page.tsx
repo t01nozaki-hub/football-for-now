@@ -106,7 +106,7 @@ export default function TeamListPage() {
                         </div>
                         <div className="flex-1">
                           <h2 className="text-2xl md:text-3xl font-black italic tracking-tight uppercase leading-none">{league.name}</h2>
-                          <Link href={`/leagues/${league.code}`} className="text-[10px] font-black uppercase tracking-widest text-neon-lime hover:text-white transition-colors mt-2 inline-flex items-center gap-1 group">
+                          <Link href={`/leagues/${league.code}/`} className="text-[10px] font-black uppercase tracking-widest text-neon-lime hover:text-white transition-colors mt-2 inline-flex items-center gap-1 group">
                             View Table & Stats <span className="group-hover:translate-x-1 transition-transform">→</span>
                           </Link>
                         </div>
@@ -121,7 +121,7 @@ export default function TeamListPage() {
                             whileTap={{ scale: 0.98 }}
                           >
                             <Link 
-                              href={`/teams/${team.id}`}
+                              href={`/teams/${team.id}/`}
                               className="glass rounded-3xl p-6 flex flex-col items-center text-center gap-5 border border-white/5 hover:border-neon-lime/30 hover:bg-white/[0.07] transition-all group h-full justify-center relative overflow-hidden"
                             >
                               <div className="absolute top-0 right-0 w-12 h-12 bg-neon-lime/5 blur-xl rounded-full -mr-6 -mt-6 group-hover:bg-neon-lime/10 transition-colors" />

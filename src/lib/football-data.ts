@@ -7,6 +7,9 @@ import { getWithBuildCache } from './build-cache';
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function fetchWithRetry(url: string, options: any, retries = 10) {
+  if (!API_TOKEN) {
+    throw new Error(`API Token is missing for ${url}`);
+  }
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, options);
@@ -35,6 +38,8 @@ export const LEAGUE_MAP: Record<string, string> = {
   'BL1': 'ブンデスリーガ',
   'SA': 'セリエA',
   'FL1': 'リーグ・アン',
+  'PPL': 'プリメイラ・リーガ',
+  'DED': 'エールディヴィジ',
   'CL': 'チャンピオンズリーグ',
   'EC': 'ヨーロッパ選手権',
 };
@@ -59,18 +64,50 @@ export const JAPANESE_PLAYERS = [
   { name: 'Kaoru Mitoma', jpName: '三笘 薫', team: 'Brighton & Hove Albion FC', role: 'FW' },
   { name: 'Takefusa Kubo', jpName: '久保 建英', team: 'Real Sociedad de Fútbol', role: 'FW' },
   { name: 'Wataru Endo', jpName: '遠藤 航', team: 'Liverpool FC', role: 'MF' },
-  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'AFC Ajax', role: 'DF' },
-  { name: 'Ko Itakura', jpName: '板倉 滉', team: 'Borussia Mönchengladbach', role: 'DF' },
+  { name: 'Takehiro Tomiyasu', jpName: '冨安 健洋', team: 'Arsenal FC', role: 'DF' },
+  { name: 'Ko Itakura', jpName: '板倉 滉', team: 'AFC Ajax', role: 'DF' },
   { name: 'Ayase Ueda', jpName: '上田 綺世', team: 'Feyenoord Rotterdam', role: 'FW' },
   { name: 'Hiroki Ito', jpName: '伊藤 洋輝', team: 'FC Bayern München', role: 'DF' },
-  { name: 'Ritsu Doan', jpName: '堂安 律', team: 'SC Freiburg', role: 'MF' },
+  { name: 'Ritsu Doan', jpName: '堂安 律', team: 'Eintracht Frankfurt', role: 'MF' },
   { name: 'Takumi Minamino', jpName: '南野 拓実', team: 'AS Monaco FC', role: 'MF' },
   { name: 'Daichi Kamada', jpName: '鎌田 大地', team: 'Crystal Palace FC', role: 'MF' },
   { name: 'Reo Hatate', jpName: '旗手 怜央', team: 'Celtic FC', role: 'MF' },
-  { name: 'Kyogo Furuhashi', jpName: '古橋 亨梧', team: 'Celtic FC', role: 'FW' },
+  { name: 'Kyogo Furuhashi', jpName: '古橋 亨梧', team: 'Birmingham City FC', role: 'FW' },
   { name: 'Daizen Maeda', jpName: '前田 大然', team: 'Celtic FC', role: 'FW' },
   { name: 'Hidemasa Morita', jpName: '守田 英正', team: 'Sporting CP', role: 'MF' },
-  { name: 'Koki Machida', jpName: '町田 浩樹', team: 'Royale Union Saint-Gilloise', role: 'DF' },
+  { name: 'Koki Machida', jpName: '町田 浩樹', team: 'TSG 1899 Hoffenheim', role: 'DF' },
+  { name: 'Keito Nakamura', jpName: '中村 敬斗', team: 'Stade de Reims', role: 'FW' },
+  { name: 'Junya Ito', jpName: '伊東 純也', team: 'KRC Genk', role: 'FW' },
+  { name: 'Yukinari Sugawara', jpName: '菅原 由勢', team: 'SV Werder Bremen', role: 'DF' },
+  { name: 'Koki Ogawa', jpName: '小川 航基', team: 'NEC Nijmegen', role: 'FW' },
+  { name: 'Yuki Ohashi', jpName: '大橋 祐紀', team: 'Blackburn Rovers FC', role: 'FW' },
+  { name: 'Shogo Taniguchi', jpName: '谷口 彰悟', team: 'Sint-Truidense VV', role: 'DF' },
+  { name: 'Zion Suzuki', jpName: '鈴木 彩艶', team: 'Parma Calcio 1913', role: 'GK' },
+  { name: 'Koki Saito', jpName: '斉藤 光毅', team: 'Queens Park Rangers FC', role: 'FW' },
+  { name: 'Yuito Suzuki', jpName: '鈴木 唯人', team: 'SC Freiburg', role: 'MF' },
+  { name: 'Shunsuke Mito', jpName: '三戸 舜介', team: 'Sparta Rotterdam', role: 'MF' },
+  { name: 'Joel Chima Fujita', jpName: '藤田 譲瑠チマ', team: 'FC St. Pauli', role: 'MF' },
+  { name: 'Kota Takai', jpName: '高井 幸大', team: 'VfL Borussia Mönchengladbach', role: 'DF' },
+  { name: 'Kaishu Sano', jpName: '佐野 海舟', team: '1. FSV Mainz 05', role: 'MF' },
+  { name: 'Sota Kawasaki', jpName: '川崎 颯太', team: '1. FSV Mainz 05', role: 'MF' },
+  { name: 'Shuto Machino', jpName: '町野 修斗', team: 'VfL Borussia Mönchengladbach', role: 'FW' },
+  { name: 'Ryotaro Ito', jpName: '伊藤 涼太郎', team: 'Sint-Truidense VV', role: 'MF' },
+  { name: 'Tatsuhiro Sakamoto', jpName: '坂元 達裕', team: 'Coventry City FC', role: 'MF' },
+  { name: 'Yu Hirakawa', jpName: '平河 悠', team: 'Hull City AFC', role: 'FW' },
+  { name: 'Ryoya Morishita', jpName: '森下 龍矢', team: 'Blackburn Rovers FC', role: 'DF' },
+  { name: 'Tomoki Iwata', jpName: '岩田 智輝', team: 'Birmingham City FC', role: 'MF' },
+  { name: 'Kanya Fujimoto', jpName: '藤本 寛也', team: 'Birmingham City FC', role: 'MF' },
+  { name: 'Takuma Asano', jpName: '浅野 拓磨', team: 'RCD Mallorca', role: 'FW' },
+  { name: 'Anrie Chase', jpName: 'チェイス アンリ', team: 'VfB Stuttgart', role: 'DF' },
+  { name: 'Kodai Sano', jpName: '佐野 航大', team: 'NEC Nijmegen', role: 'MF' },
+  { name: 'Daiki Hashioka', jpName: '橋岡 大樹', team: 'Luton Town FC', role: 'DF' },
+  { name: 'Koji Miyoshi', jpName: '三好 康児', team: 'Birmingham City FC', role: 'MF' },
+  { name: 'Shunya Shiozawa', jpName: '塩澤 隼也', team: 'KV Kortrijk', role: 'MF' },
+  { name: 'Taiki Yamada', jpName: '山田 大樹', team: 'SV Darmstadt 98', role: 'GK' },
+  { name: 'Hayao Kawabe', jpName: '川辺 駿', team: 'Olympique Lyonnais', role: 'MF' },
+  { name: 'Shuto Machino', jpName: '町野 修斗', team: 'Holstein Kiel', role: 'FW' },
+  { name: 'Yuito Suzuki', jpName: '鈴木 唯人', team: 'SC Freiburg', role: 'FW' },
+  { name: 'Joel Chima Fujita', jpName: '藤田 譲瑠チマ', team: 'FC St. Pauli', role: 'MF' },
 ];
 
 export const JAPANESE_PLAYERS_TEAMS = JAPANESE_PLAYERS.map(p => p.team);
@@ -175,7 +212,19 @@ const TEAM_NAME_MAP: Record<string, string> = {
   'AFC Ajax': 'アヤックス',
   'PSV': 'PSV',
   'Feyenoord Rotterdam': 'フェイエノールト',
-  'Royale Union Saint-Gilloise': 'サン=トワイヤン',
+  'Royale Union Saint-Gilloise': 'サン=ジロワーズ',
+  'Birmingham City FC': 'バーミンガム',
+  'Southampton FC': 'サウサンプトン',
+  'NEC Nijmegen': 'NECナイメヘン',
+  'Blackburn Rovers FC': 'ブラックバーン',
+  'Sint-Truidense VV': 'シント=トロイデン',
+  'KRC Genk': 'ヘンク',
+  'Queens Park Rangers FC': 'QPR',
+  'Sparta Rotterdam': 'スパルタ・ロッテルダム',
+  'FC St. Pauli': 'ザンクトパウリ',
+  'Coventry City FC': 'コヴェントリー',
+  'Hull City AFC': 'ハル・シティ',
+  'KV Kortrijk': 'コルトレイク',
 };
 
 export const MAJOR_TEAMS = [
