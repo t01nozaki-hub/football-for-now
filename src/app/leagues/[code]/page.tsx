@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { fetchStandings, fetchScorers, fetchMatches, LEAGUE_MAP, translateTeamName, LEAGUES } from '@/lib/football-data';
+import { fetchStandings, fetchScorers, fetchMatches, LEAGUE_MAP, translateTeamName, LEAGUES, MAJOR_TEAMS } from '@/lib/football-data';
 import { Header, Footer } from '@/components/Navigation';
 import { MatchCard } from '@/components/MatchCard';
 import { Trophy, Target, Calendar, ChevronLeft } from 'lucide-react';
@@ -107,12 +107,21 @@ export default async function LeaguePage({ params }: { params: Promise<{ code: s
                       <tr key={row.team.id} className="hover:bg-white/5 transition-colors group">
                         <td className="px-6 py-4 font-mono font-bold text-white/20 group-hover:text-neon-lime">{row.position}</td>
                         <td className="px-6 py-4">
-                          <Link href={`/teams/${row.team.id}/`} className="flex items-center gap-4 hover:text-neon-lime transition-colors">
-                            <img src={row.team.crest} alt="" className="w-6 h-6 object-contain" />
-                            <span className="text-sm font-bold truncate max-w-[120px] md:max-w-none">
-                              {translateTeamName(row.team.name)}
-                            </span>
-                          </Link>
+                          {MAJOR_TEAMS.some(m => m.id === row.team.id.toString()) ? (
+                            <Link href={`/teams/${row.team.id}/`} className="flex items-center gap-4 hover:text-neon-lime transition-colors">
+                              <img src={row.team.crest} alt="" className="w-6 h-6 object-contain" />
+                              <span className="text-sm font-bold truncate max-w-[120px] md:max-w-none">
+                                {translateTeamName(row.team.name)}
+                              </span>
+                            </Link>
+                          ) : (
+                            <div className="flex items-center gap-4 text-white/80 transition-colors">
+                              <img src={row.team.crest} alt="" className="w-6 h-6 object-contain" />
+                              <span className="text-sm font-bold truncate max-w-[120px] md:max-w-none">
+                                {translateTeamName(row.team.name)}
+                              </span>
+                            </div>
+                          )}
                         </td>
                         <td className="px-6 py-4 text-sm font-medium">{row.playedGames}</td>
                         <td className="px-6 py-4 text-sm font-medium">{row.won}</td>

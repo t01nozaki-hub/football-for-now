@@ -4,7 +4,7 @@ import { Header, Footer } from '@/components/Navigation';
 import { Globe, Search, ChevronLeft, Shield } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { fetchStandings, LEAGUE_MAP, translateTeamName, LEAGUES } from '@/lib/football-data';
+import { fetchStandings, LEAGUE_MAP, translateTeamName, LEAGUES, MAJOR_TEAMS } from '@/lib/football-data';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function TeamListPage() {
@@ -120,20 +120,33 @@ export default function TeamListPage() {
                             whileHover={{ y: -5 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            <Link 
-                              href={`/teams/${team.id}/`}
-                              className="glass rounded-3xl p-6 flex flex-col items-center text-center gap-5 border border-white/5 hover:border-neon-lime/30 hover:bg-white/[0.07] transition-all group h-full justify-center relative overflow-hidden"
-                            >
-                              <div className="absolute top-0 right-0 w-12 h-12 bg-neon-lime/5 blur-xl rounded-full -mr-6 -mt-6 group-hover:bg-neon-lime/10 transition-colors" />
-                              <img 
-                                src={team.crest} 
-                                alt="" 
-                                className="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl" 
-                              />
-                              <span className="text-[11px] font-black leading-tight group-hover:text-neon-lime transition-colors uppercase tracking-wider">
-                                {translateTeamName(team.name)}
-                              </span>
-                            </Link>
+                            {MAJOR_TEAMS.some(m => m.id === team.id.toString()) ? (
+                              <Link 
+                                href={`/teams/${team.id}/`}
+                                className="glass rounded-3xl p-6 flex flex-col items-center text-center gap-5 border border-white/5 hover:border-neon-lime/30 hover:bg-white/[0.07] transition-all group h-full justify-center relative overflow-hidden"
+                              >
+                                <div className="absolute top-0 right-0 w-12 h-12 bg-neon-lime/5 blur-xl rounded-full -mr-6 -mt-6 group-hover:bg-neon-lime/10 transition-colors" />
+                                <img 
+                                  src={team.crest} 
+                                  alt="" 
+                                  className="w-14 h-14 object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-2xl" 
+                                />
+                                <span className="text-[11px] font-black leading-tight group-hover:text-neon-lime transition-colors uppercase tracking-wider">
+                                  {translateTeamName(team.name)}
+                                </span>
+                              </Link>
+                            ) : (
+                              <div className="glass rounded-3xl p-6 flex flex-col items-center text-center gap-5 border border-white/5 transition-all h-full justify-center relative overflow-hidden opacity-60">
+                                <img 
+                                  src={team.crest} 
+                                  alt="" 
+                                  className="w-14 h-14 object-contain drop-shadow-2xl" 
+                                />
+                                <span className="text-[11px] font-black leading-tight text-white/80 uppercase tracking-wider">
+                                  {translateTeamName(team.name)}
+                                </span>
+                              </div>
+                            )}
                           </motion.div>
                         ))}
                       </div>

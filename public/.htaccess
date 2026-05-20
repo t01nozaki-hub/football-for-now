@@ -4,6 +4,10 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect index.html to trailing slash URL to avoid duplicate content
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^/]+/)*index\.html\ HTTP/
+RewriteRule ^(([^/]+/)*)index\.html$ https://%{HTTP_HOST}/$1 [R=301,L]
+
 # Trailing Slash Enforce (Redirect non-slash to slash)
 # Ignore files (contains .)
 RewriteCond %{REQUEST_FILENAME} !-f

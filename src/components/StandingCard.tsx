@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { translateTeamName, JAPANESE_PLAYERS_TEAMS, getJapanesePlayersInTeam } from '@/lib/football-data';
+import { translateTeamName, JAPANESE_PLAYERS_TEAMS, getJapanesePlayersInTeam, MAJOR_TEAMS } from '@/lib/football-data';
 import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -48,9 +48,15 @@ export const StandingCard: React.FC<StandingCardProps> = ({ leagueName, leagueCo
                     {team.position}
                   </span>
                   <img src={team.team.crest} alt={team.team.name} className="w-6 h-6 object-contain" />
-                  <Link href={`/teams/${team.team.id}/`} className="text-sm font-medium group-hover/row:text-neon-lime transition-colors hover:underline decoration-neon-lime underline-offset-4">
-                    {translateTeamName(team.team.name)}
-                  </Link>
+                  {MAJOR_TEAMS.some(m => m.id === team.team.id.toString()) ? (
+                    <Link href={`/teams/${team.team.id}/`} className="text-sm font-medium group-hover/row:text-neon-lime transition-colors hover:underline decoration-neon-lime underline-offset-4">
+                      {translateTeamName(team.team.name)}
+                    </Link>
+                  ) : (
+                    <span className="text-sm font-medium group-hover/row:text-white/80 transition-colors">
+                      {translateTeamName(team.team.name)}
+                    </span>
+                  )}
 
                   {isJapanesePlayerTeam && (
                     <div className="flex items-center gap-1 px-1.5 py-0.5 bg-neon-lime/10 border border-neon-lime/20 rounded-full">
