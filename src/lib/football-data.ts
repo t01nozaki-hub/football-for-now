@@ -12,7 +12,15 @@ async function fetchWithRetry(url: string, options: any, retries = 10) {
   }
   for (let i = 0; i < retries; i++) {
     try {
-      const res = await fetch(url, options);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      
+      const res = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
       if (res.status === 429) {
         console.warn(`Rate limit (429) hit for ${url}. Waiting 30s...`);
         await sleep(30000);
