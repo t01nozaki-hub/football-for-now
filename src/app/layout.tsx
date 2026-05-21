@@ -22,11 +22,13 @@ export const metadata: Metadata = {
     siteName: 'football for now',
     locale: 'ja_JP',
     type: 'website',
+    images: [{ url: '/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'football for now | 欧州サッカーを最速で把握',
     description: '欧州主要リーグの最新順位、試合結果、日本人選手の活躍を最速でチェック。',
+    images: ['/og-image.png'],
   },
 };
 
