@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${player.jpName} | football for now`,
       description: `${player.jpName}の最新パフォーマンスデータをチェック。`,
       type: 'profile',
-      images: [{ url: `https://footballfornow.com/api/og/player?name=${encodeURIComponent(player.name)}` }],
+      images: [{ url: '/og-image.png' }],
     },
     alternates: {
       canonical: `/japanese-players/${slug}/`,

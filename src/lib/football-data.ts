@@ -232,6 +232,7 @@ export const MAJOR_TEAMS = [
   { id: '64', name: 'Liverpool FC', jpName: 'リヴァプール' },
   { id: '65', name: 'Manchester City FC', jpName: 'マンチェスター・シティ' },
   { id: '66', name: 'Manchester United FC', jpName: 'マンチェスター・ユナイテッド' },
+  { id: '63', name: 'Chelsea FC', jpName: 'チェルシー' },
   { id: '73', name: 'Tottenham Hotspur FC', jpName: 'トッテナム' },
   { id: '1044', name: 'Brighton & Hove Albion FC', jpName: 'ブライトン' },
   { id: '62', name: 'Everton FC', jpName: 'エヴァートン' },
